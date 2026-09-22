@@ -1,0 +1,54 @@
+{/* FORMAT DEMO (not lesson material): plain fences with meta flags, inline highlighted code, and the everyday annotations mark, tooltip, fold, collapse, and diff. Each pattern here is safe to copy into real content. HTML-style comments are a compile error in this pipeline; only expression comments like this one work. */}
+
+## Annotated code blocks
+
+A fence's meta line carries two things: an optional flag cluster starting with `-`, followed by an optional title that renders in a header bar above the code. The block below uses flags n+c (line numbers, copy button) and the title main.js. Inline highlighting works anywhere in prose; write *js `greet("world")`* to get a highlighted chip instead of a plain one.
+
+```js -nc main.js
+function greet(name) {
+  return "Hello, " + name;
+}
+
+console.log(greet("world"));
+```
+
+### Highlighting lines and tokens
+
+Block annotations take a line range (or apply to the next single line); inline annotations take a regex. Both are stripped from the output; your ordinary comments stay exactly where you wrote them.
+
+```js
+// !tooltip[/items/] "A plain array of numbers."
+const items = [3, 1, 2]; // !mark gold
+// The array is ordinary; order does not matter yet.
+const sorted = [...items].sort();
+sorted.push(4);
+```
+
+This block shows all three comment kinds at once: the plain comment ("The array is ordinary...") stays visible in the output; `!mark gold`, written as a trailing comment on its code line, tints that line with a left accent border and is then removed; and `!tooltip`, written on its own line above where it matches, attaches a hover explanation to the underlined token before being removed itself. Hovering that token shows the tooltip about 300ms later.
+
+### Folding boilerplate and collapsing regions
+
+```js
+// !fold[/options = \{.*\};/m]
+const options = { timeout: 5000, retries: 2 };
+fetchJson("/api/items", options);
+
+// !collapse(1:4) collapsed
+function normalize(obj) {
+  obj.id = String(obj.id ?? "");
+  return obj;
+}
+```
+
+The `!fold` regex captures the whole options assignment and hides it behind a small expandable button, keeping the call that matters readable. The `!collapse` region starts closed: only its first line (the function signature) stays visible with a chevron, and clicking it reveals or hides everything else in range — here that is the whole body including the closing brace; narrow the range by one line if you would rather leave the brace on screen.
+
+### Showing an edit in place
+
+```js
+// !diff -
+app.use(legacyLogger());
+// !diff +
+app.use(structuredLogger());
+```
+
+Lines marked with `!diff -` read as removed (red, minus gutter) and lines marked with `!diff +` as added (green). Together they show a change the way a diff view does, without leaving the block.

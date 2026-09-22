@@ -1,0 +1,87 @@
+{/* FORMAT DEMO (not lesson material): complete hike syntax for Scrollycoding, Spotlight, and CodeWithTabs. The !!steps headings and the !code / !!tabs fence metas only work inside these components; copy them outside and they render as literal text. Every code fence must be closed before the next heading or the closing component tag. */}
+
+## Walkthroughs that scroll
+
+The walkthrough below builds one idea across three steps. The prose column scrolls (or is clicked) while the code column stays sticky, switching to match whichever step you are reading. Every step stands on its own: a learner who reads only step two still gets something sensible from it.
+
+<Scrollycoding>
+## !!steps Start with an empty list
+
+We begin with nothing but a variable. There is no data yet; we will add some ourselves in the next steps.
+
+```js !code -a
+let items = [];
+```
+
+## !!steps Push the first value
+
+`push` mutates the array in place and returns the new length, not the array itself. The console prints 1, which proves one element now exists.
+
+```js !code -a
+let items = [];
+
+items.push(1);
+console.log(items.length); // 1
+```
+
+## !!steps Add another and read them back
+
+Now that values can be added, we read them out with a loop. `for...of` hands each element to us directly, so no index bookkeeping is needed.
+
+```js !code -a
+let items = [];
+
+items.push(1);
+items.push(2);
+
+for (const item of items) {
+  console.log(item); // prints 1, then 2
+}
+```
+</Scrollycoding>
+
+## Comparing approaches side by side
+
+Spotlight uses the exact same syntax as Scrollycoding, but steps activate by clicking a card instead of scrolling. That makes it right for peer choices (different ways to do the same job) rather than a sequence, and it reads best with five options or fewer.
+
+<Spotlight>
+### !!steps With an explicit loop
+
+The classic approach: a running total variable plus one line per element. Easy to trace in a debugger because every change is visible on its own line.
+
+```js !code -a
+function sum(values) {
+  let total = 0;
+  for (const value of values) {
+    total += value;
+  }
+  return total;
+}
+```
+
+### !!steps With reduce
+
+The declarative version: one expression and no scratch variable. The callback receives the running total first and the current element second, which trips up a lot of beginners at first.
+
+```js !code -a
+function sum(values) {
+  return values.reduce((total, value) => total + value, 0);
+}
+```
+</Spotlight>
+
+## Same task in two languages
+
+CodeWithTabs compares variants inside one block. Each tab's label is the text after `!!tabs` (double bang, usually a filename or language name); labels must be unique and the first tab opens by default. No flags and no annotations work inside tabs: plain code only.
+
+<CodeWithTabs>
+```js !!tabs JavaScript
+const doubled = [1, 2, 3].map((n) => n * 2);
+console.log(doubled); // [2, 4, 6]
+```
+
+```python !!tabs Python
+doubled = [n * 2 for n in (1, 2, 3)]
+print(doubled)  # [2, 4, 6]
+```
+</CodeWithTabs>
