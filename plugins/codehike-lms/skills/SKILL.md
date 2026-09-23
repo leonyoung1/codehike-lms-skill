@@ -50,7 +50,7 @@ stop at its boundary.
 ## Code blocks
 
 ````mdx
-```js -nc main.js
+```js main.js -nc
 function greet(name) {
   return "Hello, " + name;
 }
@@ -62,10 +62,16 @@ console.log(greet("world"));
   `jsx`, `py`/`python`, `c`, `cpp`, `java`, `html`, `css`, `json`, `yaml`, `sql`, `sh`,
   `go`, `rust`, ...). An unknown tag renders as unhighlighted plain text; use `txt` when no
   language applies.
-- **Meta flags**: the first meta token starting with `-` is a flag cluster; any remaining
-  text becomes a title shown in a header bar above the code (usually a filename). Example:
-  a fence line reading ```` ```js -nc utils.js ```` gives flags n+c and title "utils.js".
+- **Meta flags**: after the language tag, write the title first (usually a filename) and
+  then an optional flag cluster, which is one `-` token such as `-nc`. Example: ```` ```js utils.js -nc ````
+  gives flags n+c and title "utils.js". Never put the flag before the title: `js -nc utils.js`
+  keeps the "-nc" inside the title, so the header bar shows "-nc utils.js" verbatim.
   A fence with neither flags nor a title renders borderless without a header bar.
+- **No backtick on the fence line itself**: CommonMark forbids them inside an info string,
+  so any fence whose language tag, flags, title, or label contains one (the typical
+  trigger is highlighted inline syntax in a tab label) is not parsed as a code fence at
+  all. The text then renders as prose where the syntax in it activates for real, and the
+  next ``` opens a junk block that swallows everything until the next closing fence.
 
 | Flag | Effect |
 | --- | --- |
@@ -77,16 +83,27 @@ console.log(greet("world"));
 
 ## Inline code
 
-- Plain: `` `code` `` renders as a neutral inline chip (no highlighting).
-- Highlighted: write a language before the backticks, wrapped in emphasis. The raw source
-  you should emit looks like this:
+Default to **highlighted** inline code for real tokens of code (variables, functions,
+keywords, method calls): write a language before the backticks, wrapped in emphasis. The
+raw source you should emit looks like this:
 
   ```text
   The variable *js `count`* holds the number of iterations.
   ```
 
-  "count" then renders with JS syntax highlighting. Any supported language works; plain
-  `` `code` `` (no leading word) stays unhighlighted.
+"count" then renders as a chip with JS syntax highlighting. Any supported language works;
+always include the language word, because an emphasized code without one (like `` *`count`* ``)
+silently highlights as JSX instead of whatever you had in mind.
+
+Plain: `` `code` `` renders as a neutral inline chip (no highlighting). Reserve it for
+things that are not code in any single language: file paths (`src/lib/store.ts`), CLI
+flags (`--no-pager`), and bare construct names where the current language does not apply.
+
+Where it works, anywhere prose works: paragraphs, lists, blockquotes, link text, headings
+(the span contributes nothing to the anchor id, so a double hyphen marks its place in the
+slug), table cells, Alert and Accordion bodies, and Scrollycoding/Spotlight step bodies.
+It never works inside JSX attribute values or on fence meta lines; see Failure modes for
+what those render as instead.
 
 ## Code annotations
 
@@ -168,8 +185,11 @@ Rules (violating any of these breaks rendering or shows an error box):
 
 - Every step starts with `## !!steps <Title>` — the same heading level for every step. The
   title becomes the step header; the heading itself never renders as a heading.
+- Step titles are plain text only. Highlighted inline code in one does not render, and
+  everything from it on is dropped silently (a truncated title, or an empty one if the span
+  comes first) with no error to catch it.
 - Each step contains exactly one code fence whose meta begins `!code` (flags and/or a title
-  may follow, e.g. ```` ```js !code -n app.js ````). A plain fence in that position causes
+  may follow, e.g. ```` ```js !code app.js -n ````). A plain fence in that position causes
   a runtime error for the missing step code.
 - Close every code fence before the next heading or the closing tag — an unclosed fence
   swallows the rest of the document as code text.
@@ -200,7 +220,8 @@ print(doubled)  # [2, 4, 6]
 
 - The tab label is the text after `!!tabs` (double bang — see the accumulation rule above)
   — usually a filename or language name. Labels must be non-empty and unique; the first tab
-  opens by default.
+  opens by default. They are plain text taken from the fence line, so highlighted inline
+  syntax in one renders literally as asterisks and backticks.
 - The double bang matters: with single-bang `!tabs` fences, only the last tab survives.
 - No flags or annotations work inside tabs (they render as plain highlighted code); keep
   them simple, and close every fence before `</CodeWithTabs>`.
@@ -221,7 +242,8 @@ flowchart LR
 Use them for flows, sequences, and structure. They render at column width (768px), so keep
 diagrams small and node labels short. Standard Mermaid types work: flowchart,
 sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, pie. Do not annotate them —
-annotations do not apply to mermaid blocks.
+annotations do not apply to mermaid blocks, and label text inside nodes renders exactly as
+written (no markdown, no highlighted inline code).
 
 ## Callouts and accordions
 
@@ -239,10 +261,13 @@ Hidden-by-default detail goes here. Accordions are open by default, so pass
 - `Alert` props: `type` = `note` (neutral info) | `tip` (useful technique) | `important`
   (must-retain fact) | `caution` (common mistake or risk) | `warning` (serious
   consequence); default `note`. Without a `title`, the type name is shown capitalized.
-  Alert bodies are plain markdown: prose, lists, inline code all work inside.
+  Bodies are full markdown: prose, lists, tables, and highlighted inline code all work
+  inside them; titles render exactly as written because they are attribute values with no
+  markdown or inline syntax.
 - `Accordion` props: `title` (required), `type` = `accent` (default) or `default`,
   `defaultOpen` boolean (defaults to **true** — explicitly pass `{false}` to start closed).
-  It holds one topic; stack multiple Accordion blocks for several.
+  It holds one topic; stack multiple Accordion blocks for several. Its body takes the same
+  full markdown as Alert bodies, and its title follows the same plain-text rule.
 
 ## Images
 
@@ -300,6 +325,8 @@ Anti-AI-slop rules, applied to all prose:
 | Two same-name single-bang hike items (e.g. two `!tabs` fences instead of `!!tabs`) | Only the last one survives silently — use `!!` to accumulate them into an array |
 | Old-style `{#mark}` brace annotations (CodeHike 0.x) | Plain comment text; nothing happens |
 | Annotation comments inside a fence tagged `json` (JSON has no comments) | They render as literal code lines; use the tag `jsonc` to annotate JSON |
+| A backtick anywhere on a code fence line (in its tag, flags, title, or label) | That line stops being a fence: it renders as prose and the next ``` opens a junk block that swallows everything until the next closing fence — inside Scrollycoding/Spotlight/CodeWithTabs this usually ends in an error box for the whole element |
+| Highlighted inline code in a `title`/label attribute or in a `## !!steps` heading | Alert/Accordion/tab titles show literal asterisks and backticks; step titles are truncated (or empty) silently, with no error to catch it |
 
 ## Examples
 

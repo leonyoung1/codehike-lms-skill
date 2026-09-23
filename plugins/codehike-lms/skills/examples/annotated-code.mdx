@@ -2,9 +2,9 @@
 
 ## Annotated code blocks
 
-A fence's meta line carries two things: an optional flag cluster starting with `-`, followed by an optional title that renders in a header bar above the code. The block below uses flags n+c (line numbers, copy button) and the title main.js. Inline highlighting works anywhere in prose; write *js `greet("world")`* to get a highlighted chip instead of a plain one.
+A fence's meta line carries an optional title that renders in a header bar above the code, written first, plus an optional flag cluster of one `-`-leading token after it. The block below uses the title main.js with flags n+c (line numbers, copy button); writing the flags before the title would leave them visible inside the header bar text. Inline highlighting works anywhere in prose; write *js `greet("world")`* to get a highlighted chip instead of a plain one.
 
-```js -nc main.js
+```js main.js -nc
 function greet(name) {
   return "Hello, " + name;
 }
