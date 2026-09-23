@@ -27,7 +27,9 @@ skill is your complete reference for what will render.
   Any other tag parses as a JSX component reference; use React attribute names for wrappers
   (`<div className="...">`), never `class=`.
 - Write in English unless the task names another language. Address the student directly as
-  "you", present tense, and match the difficulty your instructions state.
+  "you", present tense, and match the difficulty your instructions state; when they name no
+  audience, default to a fourteen-year-old beginner in the topic being taught: assume
+  school-level reading ability, but nothing about the subject itself.
 
 ## Choosing building blocks
 
@@ -46,6 +48,36 @@ Pick the simplest thing that works; interactive layouts only when they teach bet
 One idea per element. If a topic clearly needs two distinct beats (concept, then practice),
 splitting across elements is an editing decision made elsewhere: write this beat well and
 stop at its boundary.
+
+## Designing for the learner
+
+These decide whether the rendered page teaches; they hold for any subject. Scrollycoding
+carries two more that are specific to step layouts, in its own section below.
+
+- One idea per beat (step, heading block, alert); introduce terms and data structures
+  before they are needed to follow what comes next.
+- Explain why something exists: problem, operation, consequence. Prefer "this guard prevents
+  an empty request" over "here we add an if statement".
+- Open with the concrete goal: what the student will build or be able to explain by the end
+  of this beat, and what success looks like.
+- Titles name the idea or action ("Stop when the queue is empty"), not position in a sequence
+  ("Step 3"). This holds for step headings, Alert titles, and Accordion titles alike.
+- One coherent example throughout: the same scenario and data from start to finish, minimal
+  meaningful names, long expressions broken across lines. When it spans multiple files,
+  title each fence and say how the pieces relate.
+- End at the complete working version: in a walkthrough the last step is the assembled code;
+  label partial snippets as partials and leave no unexplained ellipses in final code, because
+  learners paste this out to run it.
+- Connect claims to concrete outcomes: one specific input (or situation) with its expected
+  result, and which lines (or passages) produce it. For anything that changes over time
+  (loops, recursion, async flows, multi-step processes), show the changing state between
+  beats in prose; use `pill`, `ruler`, or a mermaid diagram when a picture says it better.
+- When a mistake (or misreading) teaches, teach it: show the wrong version, name its symptom,
+  then repair it (two adjacent steps for a scrolly walkthrough, `!diff` inside one fence).
+  Point students at the memorable ones with a `caution` Alert.
+- Close with a small transfer exercise: adapt the example to a related case, state the
+  desired behavior, and hint back at the concept just taught. A task-list item renders as a
+  checkbox, which fits this well.
 
 ## Code blocks
 
@@ -196,6 +228,16 @@ Rules (violating any of these breaks rendering or shows an error box):
 - Do not put prose before the first `## !!steps` heading inside the component; it is dropped.
 - Each step's code should make sense on its own: that is all the learner sees for it.
 
+Design rules (these do not break rendering, they decide whether the walkthrough teaches):
+
+- Each step's code shows what its prose explains, plus enough surrounding context to make
+  sense (signatures, conditions). If a step revisits an earlier line of a long block that
+  stays up across several steps, repeat the same code and only move `!focus` or `mark`. Mark
+  at most one important line inside the focused region.
+- Changes between steps are meaningful: keep unchanged lines stable (the `-a` diff relies on
+  it) and say what changed and why when the code differs from the previous step. Explaining
+  an earlier line is not a reason to rewrite it; move the focus instead.
+
 ### Spotlight: click-to-compare alternatives
 
 Identical syntax to Scrollycoding (`## !!steps <Title>` + ```` ```lang !code ```` fences),
@@ -268,6 +310,8 @@ Hidden-by-default detail goes here. Accordions are open by default, so pass
   `defaultOpen` boolean (defaults to **true** — explicitly pass `{false}` to start closed).
   It holds one topic; stack multiple Accordion blocks for several. Its body takes the same
   full markdown as Alert bodies, and its title follows the same plain-text rule.
+- Place content by visibility: required reasoning stays in prose or an open Alert;
+  `!tooltip`, `!callout`, and a closed Accordion are for optional depth only.
 
 ## Images
 
