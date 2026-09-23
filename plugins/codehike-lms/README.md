@@ -6,13 +6,24 @@ Use it for annotated code, Scrollycoding walkthroughs, Spotlight comparisons, co
 
 ## Install
 
-This repository doubles as its own [plugin marketplace](https://developers.openai.com/plugins/build/plugins). Add the source once:
+This repository doubles as its own [plugin marketplace](https://developers.openai.com/plugins/build/plugins). The usual route is the Codex app (ChatGPT desktop): open **Plugins**, choose **Add plugin marketplace**, and fill in the dialog with:
+
+| Field | Value |
+| --- | --- |
+| **Source** | `leonyoung1/codehike-lms-skill` — GitHub shorthand; a full Git URL works too |
+| **Git ref** | `main` — leave it as is |
+| **Sparse paths** | leave blank: the whole repository is this small marketplace, there is nothing to trim |
+
+Click **Add marketplace**. A source named **CodeHike Plugins** appears in the plugin directory; open it and install **codehike-lms**, then start a new task so its skill is available. If an older release was already installed and content looks stale after a new publish, remove the marketplace source (or restart the app) — installed copies are cached per version under `~/.codex/plugins/cache/`.
+
+With Codex CLI instead of the desktop app:
 
 ```bash
 codex plugin marketplace add leonyoung1/codehike-lms-skill
+# manage it later: codex plugin marketplace list | upgrade [codehike] | remove codehike
 ```
 
-Then open Codex in the ChatGPT desktop app → **Plugins** tab → pick the **CodeHike Plugins** source → install **codehike-lms**. For team distribution, a workspace admin can import this repository instead: **Admin → Plugins → Import marketplace**, with Source `https://github.com/leonyoung1/codehike-lms-skill`.
+For team distribution, a workspace admin can import this repository instead: **Admin → Plugins → Import marketplace**, with Source `https://github.com/leonyoung1/codehike-lms-skill`.
 
 Other routes: if you received a Codex plugin share link, open it and follow the installation flow. If you received the release ZIP:
 
