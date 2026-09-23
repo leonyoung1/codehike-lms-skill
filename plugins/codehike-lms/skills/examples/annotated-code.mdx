@@ -29,7 +29,7 @@ This block shows all three comment kinds at once: the plain comment ("The array 
 ### Folding boilerplate and collapsing regions
 
 ```js
-// !fold[/options = \{.*\};/m]
+// !fold[/(options = \{.*\};)/m]
 const options = { timeout: 5000, retries: 2 };
 fetchJson("/api/items", options);
 

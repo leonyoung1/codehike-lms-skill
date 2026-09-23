@@ -270,9 +270,6 @@ Anti-AI-slop rules, applied to all prose:
   Prefer plain words a student knows: use (not utilize/leverage), help (not facilitate),
   many (not numerous), because (not due to the fact that). Cut "in order to" → "to"; delete
   "it is important to note that".
-- Every sentence must hand the reader a concrete fact, step, or example. If it could appear
-  unchanged in another lesson's docs, cut it. Name mechanisms and numbers ("the loop runs N
-  times"), never feelings ("an elegant traversal").
 - One idea per sentence; active voice; split anything that forces backtracking. Cut adverbs
   by strengthening the verb or giving a number.
 - No em dashes (periods or commas only), straight quotes only, no decorative emoji, and no

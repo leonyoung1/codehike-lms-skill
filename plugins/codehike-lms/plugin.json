@@ -1,0 +1,33 @@
+{
+  "name": "codehike-lms",
+  "version": "1.0.1",
+  "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams.",
+  "author": {
+    "name": "Leon Young",
+    "url": "https://github.com/leonyoung1"
+  },
+  "homepage": "https://github.com/leonyoung1/codehike-lms-skill",
+  "keywords": [
+    "codehike",
+    "lms2",
+    "mdx",
+    "lessons",
+    "education"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CodeHike LMS",
+    "shortDescription": "Write CodeHike MDX lessons for LMS2.",
+    "longDescription": "Create student-facing LMS2 lesson elements with annotated code, Scrollycoding walkthroughs, Spotlight comparisons, code tabs, Mermaid diagrams, alerts, and accordions. Includes the full annotation reference and MDX examples. Produces raw MDX ready for a lesson element's code field.",
+    "developerName": "Leon Young",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/leonyoung1/codehike-lms-skill",
+    "defaultPrompt": [
+      "Write an LMS2 lesson on Python loops.",
+      "Create a Scrollycoding walkthrough of fetch.",
+      "Compare JavaScript and Python with code tabs."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

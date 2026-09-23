@@ -1,0 +1,20 @@
+{
+  "name": "codehike",
+  "interface": {
+    "displayName": "CodeHike Plugins"
+  },
+  "plugins": [
+    {
+      "name": "codehike-lms",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codehike-lms"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

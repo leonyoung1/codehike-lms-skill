@@ -92,9 +92,9 @@ green, teal, sky, violet, fuchsia, pink by index). Use to label steps or parts o
 order ("first this, then that") without adding prose.
 
 ```js
-// !pill 1
+// !pill[/fetchJson/] 1
 const data = await fetchJson(url);
-// !pill 2
+// !pill[/filter/] 2
 return data.filter(isValid);
 ```
 
@@ -151,7 +151,7 @@ the left edge of each line in range; hovering the group tints it. Use to show sc
 grouping (which lines belong to which block), especially with `n` line numbers.
 
 ```js
-// !ruler(1:4) 2
+// !ruler(1:3) 2
 function outer() {
   inner();
 }
