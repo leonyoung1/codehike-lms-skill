@@ -65,9 +65,6 @@ carries two more that are specific to step layouts, in its own section below.
 - One coherent example throughout: the same scenario and data from start to finish, minimal
   meaningful names, long expressions broken across lines. When it spans multiple files,
   title each fence and say how the pieces relate.
-- End at the complete working version: in a walkthrough the last step is the assembled code;
-  label partial snippets as partials and leave no unexplained ellipses in final code, because
-  learners paste this out to run it.
 - Connect claims to concrete outcomes: one specific input (or situation) with its expected
   result, and which lines (or passages) produce it. For anything that changes over time
   (loops, recursion, async flows, multi-step processes), show the changing state between
