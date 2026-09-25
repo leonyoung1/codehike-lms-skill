@@ -143,6 +143,19 @@ function render(list) {
 }
 ```
 
+### mention — spotlight tagged lines from a prose link
+Scope: block only; query = whitespace-separated ids (a line matches any mention whose id is in
+the list). Renders nothing inside the code itself — it stamps each tagged line with its id(s)
+so that `<CodeMentions>` wrappers can dim every non-matching line of the group while a matching
+`hover:` markdown link in their prose is hovered or focused. Without both the wrapper and at
+least one `hover:<id>` link inside it, this annotation has no visible effect; see SKILL.md's
+"Code mentions (hover/focus highlight)" section for the full contract.
+
+```js
+// !mention fetchJson
+const data = await fetchJson(url);
+```
+
 ### ruler — colored vertical bar along a line range
 Scope: block only. Query: optional `colorIndex secondToken` where colorIndex is 1-6 (same
 green/teal/sky/violet/fuchsia/pink cycle as pill) and the second token shifts the bar

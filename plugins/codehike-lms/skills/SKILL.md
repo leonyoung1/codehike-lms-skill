@@ -18,8 +18,9 @@ skill is your complete reference for what will render.
   compiles as-is; anything extra breaks it.
 - Only these components exist: `Code` and `InlineCode` (produced automatically from code
   fences and inline code), plus `Scrollycoding`, `Spotlight`, `Alert`, `Accordion`,
-  `ImageViewer`, `CodeWithTabs`. Any other JSX tag throws a runtime error. Component names
-  are case-sensitive: `<alert>` silently renders as a bare, unstyled DOM element.
+  `ImageViewer`, `CodeWithTabs`, and `CodeMentions`. Any other JSX tag throws a runtime
+  error. Component names are case-sensitive: `<alert>` silently renders as a bare,
+  unstyled DOM element.
 - No `import` statements, and MDX has no raw-HTML support: an HTML comment line
   (`<!-- ... -->`) anywhere in your source is a **compile error** that breaks the whole
   element. If you ever need an internal note it must be an MDX expression comment
@@ -39,23 +40,17 @@ Pick the simplest thing that works; interactive layouts only when they teach bet
 | --- | --- |
 | Explanation with one or a few code examples | prose + plain code fences (the default) |
 | Same concept in 2-4 languages / files / versions | `CodeWithTabs` |
+| Prose that should light up specific lines of a code block on hover or focus | `CodeMentions` (code mentions) |
 | Up to ~5 peer approaches the learner should compare, click-to-select | `Spotlight` |
 | Sequential build: code grows step by step while prose walks through it | `Scrollycoding`, only when the steps are the point |
 | Flow, sequence, or structure diagram | a fence tagged `mermaid` |
 | A warning or aside worth interrupting for | `<Alert>` |
 | Optional depth ("under the hood") | `<Accordion defaultOpen={false}>` |
 
-One idea per element. If a topic clearly needs two distinct beats (concept, then practice),
-splitting across elements is an editing decision made elsewhere: write this beat well and
-stop at its boundary.
 
 ## Designing for the learner
 
-These decide whether the rendered page teaches; they hold for any subject. Scrollycoding
-carries two more that are specific to step layouts, in its own section below.
-
-- One idea per beat (step, heading block, alert); introduce terms and data structures
-  before they are needed to follow what comes next.
+- Introduce terms and data structures before they are needed to follow what comes next.
 - Explain why something exists: problem, operation, consequence. Prefer "this guard prevents
   an empty request" over "here we add an if statement".
 - Open with the concrete goal: what the student will build or be able to explain by the end
@@ -264,6 +259,49 @@ print(doubled)  # [2, 4, 6]
 - The double bang matters: with single-bang `!tabs` fences, only the last tab survives.
 - No flags or annotations work inside tabs (they render as plain highlighted code); keep
   them simple, and close every fence before `</CodeWithTabs>`.
+
+## Code mentions (hover/focus highlight)
+
+Wrap prose and one or more code fences in `<CodeMentions>`. Ordinary markdown links whose href
+starts with `hover:` inside that wrapper render as mention chips; while a chip is hovered or
+keyboard-focused, every line of the group's tagged fences that does not carry its id drops to
+low opacity while matching lines stay fully lit. Clicking a chip does nothing — it is not a
+link anywhere.
+
+````mdx
+<CodeMentions>
+The [base case](hover:one) returns 1 directly; the [recursive case](hover:two) multiplies by the result of calling itself again.
+
+```js
+function factorial(n) {
+  if (n === 0) {
+    // !mention one
+    return 1;
+  } else {
+    // !mention two
+    return n * factorial(n - 1);
+  }
+}
+```
+</CodeMentions>
+````
+
+Rules (violating any of these leaves mentions inert or highlights the wrong lines):
+
+- The id after `!mention` must match the text after `hover:` exactly: case-sensitive, and a
+  single id contains no spaces. Tag on its own line directly above the target, or as a
+  trailing comment (`return 1; // !mention one`) to tag that line itself; standard block
+  ranges also work (`// !mention(2:4) two`).
+- Every fence you want dimmed must contain at least one `!mention` tag — untagged fences are
+  not part of the group and stay fully lit.
+- Mention links only work inside a `<CodeMentions>` wrapper; outside, they render as styled
+  chips that highlight nothing because nothing listens for them. Do not nest wrappers.
+- The annotation comments strip from the rendered code like every other annotation comment,
+  so the block stays clean for students who read it straight through.
+
+Use it to point at where a symbol does its work ("see how `fetchJson` gets called") without
+scroll-drift between prose and block. Keep it to about two to four mentions per group; beyond
+that, plain prose with line references teaches better.
 
 ## Mermaid diagrams
 

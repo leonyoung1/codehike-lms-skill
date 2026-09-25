@@ -1,4 +1,4 @@
-{/* FORMAT DEMO (not lesson material): plain fences with meta flags, inline highlighted code, and the everyday annotations mark, tooltip, fold, collapse, and diff. Each pattern here is safe to copy into real content. HTML-style comments are a compile error in this pipeline; only expression comments like this one work. */}
+{/* FORMAT DEMO (not lesson material): plain fences with meta flags, inline highlighted code, and the everyday annotations mark, tooltip, pill, fold, collapse, and diff. Each pattern here is safe to copy into real content. HTML-style comments are a compile error in this pipeline; only expression comments like this one work. */}
 
 ## Annotated code blocks
 
@@ -26,6 +26,17 @@ sorted.push(4);
 
 This block shows all three comment kinds at once: the plain comment ("The array is ordinary...") stays visible in the output; `!mark gold`, written as a trailing comment on its code line, tints that line with a left accent border and is then removed; and `!tooltip`, written on its own line above where it matches, attaches a hover explanation to the underlined token before being removed itself. Hovering that token shows the tooltip about 300ms later.
 
+### Numbering steps and parts of code
+
+```js
+// !pill[/fetchJson/] 1
+const data = await fetchJson(url);
+// !pill[/filter/] 2
+return data.filter(isValid);
+```
+
+`!pill[/token/] n` wraps a token in a small tinted chip numbered by `n` (1-6), the color coming from a fixed six-color palette. Use it to label steps or parts of code in order ("first this, then that") and reference those numbers from prose without adding extra markup.
+
 ### Folding boilerplate and collapsing regions
 
 ```js
@@ -52,3 +63,23 @@ app.use(structuredLogger());
 ```
 
 Lines marked with `!diff -` read as removed (red, minus gutter) and lines marked with `!diff +` as added (green). Together they show a change the way a diff view does, without leaving the block.
+
+### Tracing a symbol across a block (code mentions)
+
+<CodeMentions>
+The [base case](hover:one) returns 1 directly; the [recursive case](hover:two) multiplies by the result of calling itself again. While either mention above is hovered or keyboard-focused, only its tagged lines stay lit — every other line in this block recedes to low opacity. Clicking a mention does nothing by design.
+
+```js
+function factorial(n) {
+  if (n === 0) {
+    // !mention one
+    return 1;
+  } else {
+    // !mention two
+    return n * factorial(n - 1);
+  }
+}
+```
+</CodeMentions>
+
+`<CodeMentions>` groups mention links and the fences they point at: write ordinary markdown links whose href starts `hover:` in the prose, and tag target lines inside those fences with a `!mention <id>` comment (its own line directly above, or trailing on the code line). The id after `!mention` must match the text after `hover:` exactly. Fences without any `!mention` tag are not part of the group and never dim; mention links outside a `<CodeMentions>` wrapper render as inert chips that highlight nothing.
