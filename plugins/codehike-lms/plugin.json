@@ -1,7 +1,7 @@
 {
   "name": "codehike-lms",
-  "version": "1.2.0",
-  "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams.",
+  "version": "1.3.0",
+  "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams. Build runnable static or Vite code playgrounds for the in-browser sandbox.",
   "author": {
     "name": "Leon Young",
     "url": "https://github.com/leonyoung1"
@@ -12,7 +12,11 @@
     "lms2",
     "mdx",
     "lessons",
-    "education"
+    "education",
+    "playground",
+    "webcontainers",
+    "vite",
+    "static"
   ],
   "skills": "./skills/",
   "interface": {
@@ -26,7 +30,9 @@
     "defaultPrompt": [
       "Write an LMS2 lesson on Python loops.",
       "Create a Scrollycoding walkthrough of fetch.",
-      "Compare JavaScript and Python with code tabs."
+      "Compare JavaScript and Python with code tabs.",
+      "Build a static p5.js playground exercise for students learning loops.",
+      "Scaffold a lean Vite + React playground with Tailwind 4 and a tabbed interface."
     ],
     "brandColor": "#2563EB"
   }

@@ -1,0 +1,13 @@
+# Example: static p5.js exercise
+
+**Task:** Build a static playground for an exercise where students make a ball bounce around. The student edits `main.js` — give it clear hooks and comments. Pin exact versions for every CDN package, use the latest stable ones you've checked, and style with Tailwind 4.
+
+The exact output (a bare SandpackFiles JSON map; primary editable file first):
+
+```json
+{
+  "/main.js": "// Bouncing ball exercise.\n// p5 loads from a CDN as an ES module — static playgrounds install nothing beyond the dev server.\nimport p5 from \"https://cdn.jsdelivr.net/npm/p5@2.3.4/+esm\";\n\n// Instance mode keeps all p5 state inside one sketch function, off the global object.\nconst bouncingBall = (p) => {\n  let x, y; // ball position\n  let vx, vy; // velocity in pixels per frame\n\n  p.setup = () => {\n    const size = Math.min(480, window.innerWidth - 32);\n    p.createCanvas(size, size / 2);\n    x = p.width / 2; // start centered\n    y = p.height / 2;\n    vx = 3;\n    vy = 4;\n  };\n\n  p.draw = () => {\n    p.background(245, 247, 250);\n\n    // Move the ball one frame.\n    x += vx;\n    y += vy;\n\n    // Bounce off an edge by flipping that velocity component,\n    // then clamp so a fast bounce can't escape the canvas.\n    if (x < 12 || x > p.width - 12) vx = -vx;\n    if (y < 12 || y > p.height - 12) vy = -vy;\n    x = p.constrain(x, 12, p.width - 12);\n    y = p.constrain(y, 12, p.height - 12);\n\n    // Exercise hook: change the ball's color here when it bounces.\n    p.noStroke();\n    p.fill(37, 99, 235); // blue\n    p.ellipse(x, y, 24, 24);\n  };\n};\n\n// Mount into the page — index.html provides <div id=\"sketch\">.\nnew p5(bouncingBall, document.getElementById(\"sketch\"));\n",
+  "/index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Bouncing Ball</title>\n    <!-- Tailwind 4 browser build: one script tag, no install or config -->\n    <script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4\"></script>\n  </head>\n  <body class=\"flex min-h-screen items-center justify-center bg-slate-100\">\n    <!-- p5 mounts its canvas inside this element (see main.js) -->\n    <div id=\"sketch\" class=\"overflow-hidden rounded-lg shadow-lg\"></div>\n    <script type=\"module\" src=\"/main.js\"></script>\n  </body>\n</html>\n",
+  "/package.json": "{\n  \"scripts\": {\n    \"dev\": \"web-dev-server --watch\",\n    \"dev-port\": \"web-dev-server --watch --node-resolve --root-dir . --app-index index.html --port $PORT\"\n  },\n  \"devDependencies\": { \"@web/dev-server\": \"^1.0.0\" }\n}\n"
+}
+```
