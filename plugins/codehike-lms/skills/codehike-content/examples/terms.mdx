@@ -1,0 +1,15 @@
+{/* FORMAT DEMO (not lesson material): prose tooltips in their four documented placements: paragraph, list item with highlighted inline code in the trigger, GFM table cell, and Alert body. */}
+
+## Terms and tooltips on hover
+
+The <Tooltip tip="An ordered list of **values** — supports `.push()`">array</Tooltip> is the workhorse structure, and a note can carry its own formatting inside the bubble.
+
+- Highlighted inline code stays live in a trigger: <Tooltip tip="A value that was never assigned to anything yet">*js undefined* means no value has been set for it in JavaScript</Tooltip>.
+
+| Placement | Result |
+| --- | --- |
+| GFM table cell | <Tooltip tip="Tables keep the same hover behavior as prose elsewhere">works there too</Tooltip> |
+
+<Alert type="note" title="Inside callouts too">
+The syntax survives an Alert body, so a <Tooltip tip="Optional depth on hover, exactly like in a paragraph">hover term</Tooltip> behaves identically here.
+</Alert>

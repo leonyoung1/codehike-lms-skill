@@ -18,8 +18,8 @@ skill is your complete reference for what will render.
   compiles as-is; anything extra breaks it.
 - Only these components exist: `Code` and `InlineCode` (produced automatically from code
   fences and inline code), plus `Scrollycoding`, `Spotlight`, `Alert`, `Accordion`,
-  `ImageViewer`, `CodeWithTabs`, and `CodeMentions`. Any other JSX tag throws a runtime
-  error. Component names are case-sensitive: `<alert>` silently renders as a bare,
+  `ImageViewer`, `CodeWithTabs`, `CodeMentions`, and `Tooltip`. Any other JSX tag throws a
+  runtime error. Component names are case-sensitive: `<alert>` silently renders as a bare,
   unstyled DOM element.
 - No `import` statements, and MDX has no raw-HTML support: an HTML comment line
   (`<!-- ... -->`) anywhere in your source is a **compile error** that breaks the whole
@@ -45,6 +45,7 @@ Pick the simplest thing that works; interactive layouts only when they teach bet
 | Sequential build: code grows step by step while prose walks through it | `Scrollycoding`, only when the steps are the point |
 | Flow, sequence, or structure diagram | a fence tagged `mermaid` |
 | A warning or aside worth interrupting for | `<Alert>` |
+| A word or phrase worth defining on hover | `<Tooltip tip="…">` |
 | Optional depth ("under the hood") | `<Accordion defaultOpen={false}>` |
 
 
@@ -346,7 +347,30 @@ Hidden-by-default detail goes here. Accordions are open by default, so pass
   It holds one topic; stack multiple Accordion blocks for several. Its body takes the same
   full markdown as Alert bodies, and its title follows the same plain-text rule.
 - Place content by visibility: required reasoning stays in prose or an open Alert;
-  `!tooltip`, `!callout`, and a closed Accordion are for optional depth only.
+  `!tooltip`, `!callout`, a closed Accordion, and a `<Tooltip>` hover note are for optional
+  depth only.
+
+## Terms and tooltips
+
+Wrap a word or phrase in `<Tooltip tip="…">` when it deserves a definition or quick
+clarification. The learner sees the note on hover, keyboard focus, or tap; the dashed
+underline marks it (the same look as `!tooltip` inside code fences). Keep notes short: one
+to three lines of inline text, anything longer belongs in an Accordion.
+
+````mdx
+The <Tooltip tip="An ordered list of **values** — supports `.push()`">array</Tooltip> is the workhorse structure.
+
+- You can wrap a whole phrase: <Tooltip tip="A value that was never assigned to anything yet">*js undefined* means no value has been set for it yet</Tooltip>.
+````
+
+- The trigger stays inline inside one sentence: plain text, highlighted inline code, or an
+  existing link all work. Never wrap block content (a heading, fence, or list of its own);
+  a tooltip is optional depth, so keep required reasoning in prose.
+- `tip` is a plain string attribute, so nothing in it compiles at write time: **bold**,
+  `code`, and links written in the tip are rendered inside the bubble by the component at
+  runtime instead. Same trap as Alert/Accordion titles — markdown stays inert in source.
+- Code blocks are different: their annotations use `!tooltip` in fence meta, never a
+  `<Tooltip>` tag (fence content is literal text and the JSX would show as characters).
 
 ## Images
 
@@ -395,7 +419,7 @@ Anti-AI-slop rules, applied to all prose:
 
 | If you write... | The learner sees... |
 | --- | --- |
-| A component outside the eight listed, or a lowercase name like `<alert>` | Runtime error box / bare unstyled element |
+| A component outside the nine listed, or a lowercase name like `<alert>` | Runtime error box / bare unstyled element |
 | An HTML comment line (`<!-- ... -->`) anywhere in the source | Compile error for the entire element |
 | `class=` instead of `className=`, or any other raw-HTML-style attribute | Element renders unstyled; the styling is missing silently |
 | An unclosed code fence | The rest of the document becomes code text |
@@ -406,6 +430,9 @@ Anti-AI-slop rules, applied to all prose:
 | Annotation comments inside a fence tagged `json` (JSON has no comments) | They render as literal code lines; use the tag `jsonc` to annotate JSON |
 | A backtick anywhere on a code fence line (in its tag, flags, title, or label) | That line stops being a fence: it renders as prose and the next ``` opens a junk block that swallows everything until the next closing fence — inside Scrollycoding/Spotlight/CodeWithTabs this usually ends in an error box for the whole element |
 | Highlighted inline code in a `title`/label attribute or in a `## !!steps` heading | Alert/Accordion/tab titles show literal asterisks and backticks; step titles are truncated (or empty) silently, with no error to catch it |
+| A `<Tooltip>` without a non-empty `tip=` | The phrase renders as plain text: no underline, no bubble. Nothing errors — check your source |
+| Nested tooltips (a `<Tooltip>` trigger wrapping another `<Tooltip>`) | Unsupported; behavior is undefined. Keep one note per phrase |
+| Block content or a multi-paragraph explanation wrapped in a `<Tooltip>` | A cramped scrolling bubble that breaks out of the sentence; use an Accordion for that depth |
 
 ## Examples
 
@@ -414,5 +441,8 @@ Anti-AI-slop rules, applied to all prose:
   diff) in one page.
 - [examples/steps-layouts.mdx](examples/steps-layouts.mdx): a complete Scrollycoding, a
   Spotlight, and a CodeWithTabs document showing the hike syntax end to end.
+- [examples/terms.mdx](examples/terms.mdx): prose tooltips in their four documented
+  placements: paragraph, list item with highlighted inline code in the trigger, GFM table
+  cell, and Alert body.
 
 Read the example that matches what you are about to write before writing it.
