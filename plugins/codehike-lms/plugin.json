@@ -1,6 +1,6 @@
 {
   "name": "codehike-lms",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams. Build runnable static or Vite code playgrounds for the in-browser sandbox.",
   "author": {
     "name": "Leon Young",

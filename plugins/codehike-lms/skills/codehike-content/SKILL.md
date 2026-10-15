@@ -19,8 +19,9 @@ skill is your complete reference for what will render.
 - Only these components exist: `Code` and `InlineCode` (produced automatically from code
   fences and inline code), plus `Scrollycoding`, `Spotlight`, `Alert`, `Accordion`,
   `ImageViewer`, `CodeWithTabs`, `CodeMentions`, and `Tooltip`. Any other JSX tag throws a
-  runtime error. Component names are case-sensitive: `<alert>` silently renders as a bare,
-  unstyled DOM element.
+  runtime error *(lowercase intrinsic elements such as `<div>` and `<iframe>` are HTML, not
+  components: they render normally; see Embeds)*. Component names are case-sensitive:
+  `<alert>` silently renders as a bare, unstyled DOM element.
 - No `import` statements, and MDX has no raw-HTML support: an HTML comment line
   (`<!-- ... -->`) anywhere in your source is a **compile error** that breaks the whole
   element. If you ever need an internal note it must be an MDX expression comment
@@ -380,6 +381,26 @@ The <Tooltip tip="An ordered list of **values** — supports `.push()`">array</T
   dialog): `<ImageViewer url="/api/files/<id>" width="lg" />`. `width` and `height` accept:
   xxxs, xs, sm, md, lg, xl, xxl, xxxl, full.
 - Only reference image URLs you were actually given; never invent file ids or paths.
+
+## Embeds (iframes)
+
+Intrinsic HTML elements (`div`, `iframe`) render as-is in lesson content — only unknown
+PascalCase component names throw. To embed an external page or app:
+
+````mdx
+<div className="my-4">
+  <iframe src="https://www.example.com/" title="Embedded content" width="100%" height="600px" loading="lazy" credentialless="true"></iframe>
+</div>
+````
+
+- `credentialless="true"` is **required by default** on every iframe. This platform serves
+  `Cross-Origin-Embedder-Policy: credentialless`, and embedded frames are expected to load
+  without credentials; omitting the attribute breaks some embeds. The app's own embeds follow
+  the same convention (`YouTube.tsx`, `StaticPreview.tsx`).
+- Browsers default iframes to 300×150: always set explicit `width` and `height`.
+- `title` is required (accessibility); write a short description of the embedded content.
+- Add `allow` / `sandbox` attributes only when the target needs them (e.g. `allow="autoplay"`,
+  `allow="cross-origin-isolated"`); keep the base embed minimal otherwise.
 
 ## Prose style
 

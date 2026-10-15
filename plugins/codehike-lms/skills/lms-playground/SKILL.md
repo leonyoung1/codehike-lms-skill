@@ -26,14 +26,23 @@ The `package.json` must be exactly this shape — one dev server, nothing else:
 ```json
 {
   "scripts": {
-    "dev": "web-dev-server --watch",
-    "dev-port": "web-dev-server --watch --node-resolve --root-dir . --app-index index.html --port $PORT"
+    "dev": "servor --reload",
+    "dev-port": "servor . index.html $PORT --reload",
+    "start": "servor --reload"
   },
-  "devDependencies": { "@web/dev-server": "^1.0.0" }
+  "dependencies": {
+    "servor": "^4.0.2"
+  },
+  "devDependencies": {}
 }
 ```
 
-`--app-index index.html` gives SPA-style fallback routing; `$PORT` is set by the platform — never hardcode a port, and don't add scripts or dependencies beyond this shape.
+`$PORT` is set by the platform — never hardcode a port, and don't add scripts or dependencies beyond this shape. The server is **servor**, not web-dev-server: WDS ran out of memory on school Chromebooks (8 GB RAM) and left previews spinning forever; servor boots fine there.
+
+**Hard rules:**
+- **No bare specifiers, no extensionless imports — there is no resolver, only the browser.** Imports are relative paths *with* the file extension (`./main.js`) or jsDelivr ESM URLs (`https://cdn.jsdelivr.net/npm/<pkg>@<version>/+esm`).
+- **Multi-page = real `.html` files**, linked with plain `<a href="page2.html">`. No history-API routing (`pushState`/`replaceState`, extensionless routes).
+- **Expect `[servor] listening for file changes` in every preview's console** — servor's live-reload client; harmless, don't suppress it.
 
 **Tailwind 4:** one script tag in `index.html`, no install, no config:
 
@@ -41,7 +50,7 @@ The `package.json` must be exactly this shape — one dev server, nothing else:
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 ```
 
-**Imports:** relative only (`./main.js`) or jsDelivr ESM URLs (`https://cdn.jsdelivr.net/npm/<pkg>@<version>/+esm`). Never bare specifiers — there is no bundler. Pin exact versions you have checked work (e.g. `p5@2.3.4`); Tailwind uses the `@4` tag as above.
+Pin exact versions you have checked work (e.g. `p5@2.3.4`); Tailwind uses the `@4` tag as above.
 
 p5.js from a CDN ESM import, instance mode:
 
