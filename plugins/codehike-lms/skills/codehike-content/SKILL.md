@@ -19,9 +19,13 @@ Your raw MDX lands **verbatim** in an element's content fields — you emit plai
   for.
 - Instructional note fields (the per-element staff notes) — same pipeline, but the audience is
   the instructor, not the student: write facilitation tips, coaching cues, and answers for the
-  person teaching; the NoteBlock scaffolds below exist for exactly that.
+  person teaching; the NoteBlock scaffolds below exist for exactly that. What belongs in a note —
+  structure, look-fors, coaching cues, anticipated challenges — is in
+  [reference/pedagogy.md](reference/pedagogy.md).
 - `multiple-choice.data.question` and the free-response / file-submission question fields —
-  short/inline prose rendered inside the component (no heading root).
+  short/inline prose rendered inside the component (no heading root). Before shipping any
+  assessment element (multiple-choice, free-response, file-submission) or its hint content, run
+  the self-checks in [reference/pedagogy.md](reference/pedagogy.md) (§3 question design, §5 hints).
 - **lms-backup** embeds your output verbatim into backup JSON files; JSON escaping is its job,
   not yours.
 - **lms-elements** delegates every CodeHike-routed field to you and places your output verbatim
@@ -375,7 +379,9 @@ Hidden-by-default detail goes here. Accordions are open by default, so pass
 
 A collapsible, tinted card with an icon and a colored header. The `type` picks the look
 and default header label; the body is free-form markdown (prose, lists, tables). Blocks
-are open by default and always print open.
+are open by default and always print open. What belongs in each block type — facilitation vs
+check-for-understanding vs answer routing — is in
+[reference/pedagogy.md](reference/pedagogy.md) §4.
 
 ````mdx
 <NoteBlock type="teaching-tips">
@@ -436,9 +442,14 @@ The activity's own content follows, using `###` and deeper headings only.
 - Time is **not** an attribute. The staff-only ≈ time badge next to the pill comes from the
   host element's instructional note (set in the per-element note form); students never see
   it, and present mode shows no badge at all.
-- Use markers only in markdown elements' content. In another element type's MDX fields
-  (`question`, `hint`, `instruction`) a marker renders inline but is never structural: it
-  never appears on the staff notes page.
+- Markers are structural in two places: markdown elements' content, and the description field of
+  image / youtube / link elements (the MDX rendered beside the media). In any other element type's
+  MDX fields (`question`, `hint`, `instruction`) a marker renders inline but is never structural:
+  it never appears on the staff notes page.
+- In an image / youtube / link description, a marker also changes layout: while one is present the
+  element stacks vertically (description and media in a column) no matter what placement was saved —
+  an explicit `bottom` keeps the media on top, otherwise the description sits above it. Keep the
+  marker as the description's first line so the heading leads.
 
 ## Terms and tooltips
 

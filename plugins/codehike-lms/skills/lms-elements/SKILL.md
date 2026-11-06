@@ -104,7 +104,7 @@ Top-level flags: `isSubmitType: true`, `submissionRequired: true`.
 | `url` | **yes** | Admin-file library URL or external https URL. Empty → no image renders (an empty box). Replace the example placeholder with a real upload before shipping content. |
 | `description` | no | CodeHike MDX rendered beside the image. |
 | `width` / `height` | no | Widths / Heights keys, default `"md"`. |
-| `placement` | no | `top` \| `bottom` \| `left` \| `right`, default `right` (description side). |
+| `placement` | no | `top` \| `bottom` \| `left` \| `right`, default `right` (description side). Ignored at render time while the description contains a `<Subsection>` marker — layout is forced vertical (`bottom` respected, else top); see codehike-content. |
 
 ### youtube
 
@@ -113,7 +113,7 @@ Top-level flags: `isSubmitType: true`, `submissionRequired: true`.
 | `url` | **yes** | One of the three accepted shapes: `https://youtu.be/<id>`, `https://www.youtube.com/watch?v=<id>`, or a bare video id. Anything else is passed to the embed as-is and will break. |
 | `description` | no | CodeHike MDX rendered beside the player. |
 | `startTime` / `endTime` | no | Numbers (seconds) appended to the embed URL. |
-| `width` / `height` / `placement` | no | As in image, defaults `"md"` / `"md"` / `right`. |
+| `width` / `height` / `placement` | no | As in image (including the subsection-marker vertical forcing), defaults `"md"` / `"md"` / `right`. |
 
 ### file-submission
 
@@ -134,7 +134,7 @@ Top-level flags: `isSubmitType: true`, `submissionRequired: true`.
 | `variant` | no | Default `"default"`. Allowed: `default`, `secondary`, `success`, `warning`, `destructive`, `info`, `ghost`, `outline`, `outline-default`, `outline-secondary`, `outline-success`, `outline-warning`, `outline-estructive` (sic — the form's own value). |
 | `className` | no | Extra classes appended to the button. Not translatable. |
 | `isInternal` | no | bool, default `false`. `true` = in-app navigation; `false`/absent = `window.open`. |
-| `placement` | no | As in image, default `right`. |
+| `placement` | no | As in image (including the subsection-marker vertical forcing), default `right`. |
 
 ### feedback
 
@@ -163,7 +163,8 @@ Top-level flag: `isSubmitType: true` only (no `submissionRequired`).
 1. Every CodeHike-routed field must be valid CodeHike MDX that compiles through the
    production pipeline — delegate content authoring to **codehike-content**. Section-level
    `markdown.code` starts at `##`; inline fields (questions, hints, descriptions,
-   instructions) never open with a heading; `#` is never used anywhere.
+   instructions) never open with a heading — except image/youtube/link `description`, which may
+   open with a `<Subsection>` marker (structural; forces vertical layout); `#` is never used anywhere.
 2. multiple-choice option `text`/`explanation` are plain GFM only (BasicMarkdown) — CodeHike
    components and hike syntax do not work there.
 3. feedback's `question` renders as raw text — no markdown parsing at all.

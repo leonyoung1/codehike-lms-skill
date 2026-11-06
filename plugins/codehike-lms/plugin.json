@@ -1,6 +1,6 @@
 {
   "name": "codehike-lms",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Author complete LMS2 lesson content: CodeHike MDX sections, element records for all 11 types, runnable static/Vite playgrounds, and whole backup files that validate clean.",
   "author": {
     "name": "Leon Young",
