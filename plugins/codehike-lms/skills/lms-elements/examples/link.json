@@ -1,0 +1,15 @@
+{
+  "collection": "elements",
+  "id": "e00000000000008",
+  "type": "link",
+  "rank": "08",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+    "label": "MDN JavaScript docs",
+    "isInternal": false
+  }
+}

@@ -1,15 +1,34 @@
 ---
 name: codehike-content
-description: Write student-facing lesson content as MDX for this learning platform's code-rich markdown renderer (CodeHike). Covers prose with syntax-highlighted and annotated code blocks, step-by-step coding walkthroughs (Scrollycoding/Spotlight), tabs of code variants, mermaid diagrams, callouts and accordions. Use when asked to generate or write lesson section content, course explanations, code examples, or any text that is stored as MDX in a lesson element's `code` field. Output must be raw MDX only - no commentary, no wrapping fences.
+description: "Write student-facing lesson content as raw CodeHike MDX for an element's content field — the platform's code-rich markdown with syntax-highlighted and annotated code blocks, step-by-step coding walkthroughs (Scrollycoding/Spotlight), tabs of code variants, mermaid diagrams, callouts and accordions. Use when asked to produce or write that MDX: a full lesson section for a markdown element's `code` field, or the content of any other CodeHike-routed field (instructional notes, multiple-choice question/hint, free-response hint/answer, file-submission prompt). Output must be raw MDX only - no commentary, no wrapping fences. Not for: element records `{type, data}` (lms-elements), playground file sets — SandpackFiles maps or flat-root zips (lms-playground), whole backup JSON files (lms-backup)."
 ---
 
 # CodeHike Lesson Content
 
-You are writing student-facing content for a learning platform. Your response becomes the
-entirety of one lesson element: an MDX document that renders in the browser as rich
-markdown with syntax-highlighted, annotated code (rendered by the Code Hike library),
-interactive step layouts, and diagrams. You have no access to the app or its source; this
-skill is your complete reference for what will render.
+You are writing student-facing content for a learning platform. Your response becomes one
+element's MDX content field — most often the entirety of a markdown lesson section: an MDX
+document that renders in the browser as rich markdown with syntax-highlighted, annotated code
+(rendered by the Code Hike library), interactive step layouts, and diagrams. You have no access
+to the app or its source; this skill is your complete reference for what will render.
+
+## Where your output goes
+
+Your raw MDX lands **verbatim** in an element's content fields — you emit plain text only:
+
+- A markdown element's `data.code` — the section-level lesson content this skill was named
+  for.
+- Instructional note fields (the per-element staff notes) — same pipeline, but the audience is
+  the instructor, not the student: write facilitation tips, coaching cues, and answers for the
+  person teaching; the NoteBlock scaffolds below exist for exactly that.
+- `multiple-choice.data.question` and the free-response / file-submission question fields —
+  short/inline prose rendered inside the component (no heading root).
+- **lms-backup** embeds your output verbatim into backup JSON files; JSON escaping is its job,
+  not yours.
+- **lms-elements** delegates every CodeHike-routed field to you and places your output verbatim
+  in those fields of the record it authors.
+
+The full field→parser routing table (which field of which type compiles through this pipeline vs
+plain GFM vs raw text) lives in **lms-elements**.
 
 ## Output contract
 
@@ -18,8 +37,8 @@ skill is your complete reference for what will render.
   compiles as-is; anything extra breaks it.
 - Only these components exist: `Code` and `InlineCode` (produced automatically from code
   fences and inline code), plus `Scrollycoding`, `Spotlight`, `Alert`, `Accordion`,
-  `ImageViewer`, `CodeWithTabs`, `CodeMentions`, and `Tooltip`. Any other JSX tag throws a
-  runtime error *(lowercase intrinsic elements such as `<div>` and `<iframe>` are HTML, not
+  `NoteBlock`, `Subsection`, `ImageViewer`, `CodeWithTabs`, `CodeMentions`, and `Tooltip`. Any other JSX
+  tag throws a runtime error *(lowercase intrinsic elements such as `<div>` and `<iframe>` are HTML, not
   components: they render normally; see Embeds)*. Component names are case-sensitive:
   `<alert>` silently renders as a bare, unstyled DOM element.
 - No `import` statements, and MDX has no raw-HTML support: an HTML comment line
@@ -48,7 +67,8 @@ Pick the simplest thing that works; interactive layouts only when they teach bet
 | A warning or aside worth interrupting for | `<Alert>` |
 | A word or phrase worth defining on hover | `<Tooltip tip="…">` |
 | Optional depth ("under the hood") | `<Accordion defaultOpen={false}>` |
-
+| Structured staff-note block (tips / check-for-understanding / answer) | `<NoteBlock type="…">` |
+| A named activity or Do Now beat inside a section | `<Subsection type="…" title="…"/>` |
 
 ## Designing for the learner
 
@@ -351,6 +371,75 @@ Hidden-by-default detail goes here. Accordions are open by default, so pass
   `!tooltip`, `!callout`, a closed Accordion, and a `<Tooltip>` hover note are for optional
   depth only.
 
+## Note blocks (staff-note scaffolds)
+
+A collapsible, tinted card with an icon and a colored header. The `type` picks the look
+and default header label; the body is free-form markdown (prose, lists, tables). Blocks
+are open by default and always print open.
+
+````mdx
+<NoteBlock type="teaching-tips">
+<table className="note-block-table">
+  <tbody>
+    <tr><td>Facilitation</td><td>How to run the activity: grouping, roles, timing.</td></tr>
+    <tr><td>Coaching</td><td>What to say or ask when students get stuck.</td></tr>
+  </tbody>
+</table>
+</NoteBlock>
+
+<NoteBlock type="answer-and-explanation" title="Answer and explanation — round 2">
+State the answer, then explain why it is correct.
+</NoteBlock>
+````
+
+- `type` = `teaching-tips` (blue, lightbulb) | `check-for-understanding` (green, circled
+  check) | `answer-and-explanation` (dark green, message). Omit it for a colorless card.
+  A mistyped value renders the block colorless with a visible warning line naming the bad
+  value and the valid ones; the content still shows.
+- For a label/content scaffold (like the teaching-tips example), use a raw HTML
+  `<table className="note-block-table">` with one `<tr><td>label</td><td>content</td></tr>`
+  per row. It renders borderless with no header row and no row shading (NoteBlock styles
+  the class). A plain GFM pipe table also works but forces a header row.
+- `title` (optional) overrides the type's default header label; plain text only, same rule
+  as Alert/Accordion titles. A bare `<NoteBlock>` with neither a `type` label nor a
+  `title` shows only the chevron.
+- `defaultOpen` boolean (defaults to **true** — pass `{false}` to start collapsed). The
+  header stays clickable either way, and print always renders the block open.
+- The body takes the same full markdown as Alert/Accordion bodies (prose, lists, tables).
+  Do not nest a NoteBlock inside another.
+
+## Subsection titles (activity / Do Now headings)
+
+A `<Subsection>` marker is a student-visible structural heading inside markdown element
+content: it marks named activities within a section. It renders a horizontal rule, then the
+type pill (a play triangle plus its label), then the title as a real `h2`, so it gets a
+table-of-contents entry and an anchor like any other heading.
+
+````mdx
+<Subsection type="activity" title="Build a countdown timer"/>
+
+### Start from the target value
+
+The activity's own content follows, using `###` and deeper headings only.
+````
+
+- Attributes: exactly two. `type` = `activity` (green pill) or `do-now` (yellow pill); an
+  unknown or missing type still renders the rule and the title as a plain `h2`, just without
+  the pill (that is how you spot a typo in the live preview). `title` is plain text, same
+  rule as Alert/Accordion titles.
+- One marker per markdown element, as its first line: the staff notes page associates the
+  element's instructional note with that one heading. Extra markers in the same element
+  still render but stay non-structural (no notes-page row).
+- Content inside an activity uses `###` and deeper: the subsection title already occupies
+  the `h2` level, so a `##` after it would read as a sibling section, not part of the
+  activity.
+- Time is **not** an attribute. The staff-only ≈ time badge next to the pill comes from the
+  host element's instructional note (set in the per-element note form); students never see
+  it, and present mode shows no badge at all.
+- Use markers only in markdown elements' content. In another element type's MDX fields
+  (`question`, `hint`, `instruction`) a marker renders inline but is never structural: it
+  never appears on the staff notes page.
+
 ## Terms and tooltips
 
 Wrap a word or phrase in `<Tooltip tip="…">` when it deserves a definition or quick
@@ -406,8 +495,13 @@ PascalCase component names throw. To embed an external page or app:
 
 Structure:
 
-- Start at `##`; never use `#`. The lesson page already provides context above your element;
-  a single element should not shout a top-level title. Headings are sentence case.
+- **Lesson-section markdown** (`data.code` of a markdown element): start at `##`; never use
+  `#`. The lesson page already provides context above your element; a single element should
+  not shout a top-level title. Headings are sentence case.
+- **Short/inline fields** (multiple-choice question/options/explanations, free-response
+  hint/answer, file-submission prompt, and any other field rendered inside a component):
+  inline prose that must not open with a heading at all — no `#` of any level. The no-`#`
+  half of the rule applies everywhere.
 - **Every line break inside a paragraph becomes a visible `<br>`** (this pipeline does not
   collapse soft breaks the way GitHub does). Write each paragraph as one continuous source
   line and separate paragraphs with blank lines.
@@ -436,11 +530,48 @@ Anti-AI-slop rules, applied to all prose:
   use the `!link` annotation (see reference/annotations.md), not markdown link syntax.
 - Headings get stable anchor ids derived from their text.
 
-## Failure modes (what breaks rendering)
+## Hard rules
+
+1. Only the components listed in the Output contract exist (`Code` and `InlineCode` are
+   produced automatically by code fences). Any other PascalCase tag throws a runtime error;
+   a lowercase name like `<alert>` silently renders as a bare, unstyled DOM element.
+2. No HTML comment line (`<!-- ... -->`) anywhere in the source — it is a compile error that
+   breaks the whole element. If you ever need an internal note it must be `{/* text */}`;
+   normally include no notes at all.
+3. Use React attribute names on wrappers: `className=`, never `class=` or any other
+   raw-HTML-style attribute — the styling is missing silently otherwise.
+4. Close every code fence before the next heading, tag, or closing element (an unclosed
+   fence swallows the rest of the document as code text), and put no backtick anywhere on a
+   fence line: in its tag, flags, title, or label it stops being a fence at all.
+5. Hike syntax is component-scoped: `!!`-prefixed headings and `!`/`!!`-prefixed fence metas
+   only work inside Scrollycoding, Spotlight, or CodeWithTabs — outside they render as
+   literal text. Every step has exactly one fence whose meta begins `!code`, and no prose
+   precedes the first `## !!steps`.
+6. Repeated same-name hike items need the double bang (`!!steps`, `!!tabs`): a single-bang
+   repeat silently overwrites, leaving only the last item.
+7. No highlighted inline code in step titles, tab labels, or any `title`/`tip` attribute —
+   it renders literally as asterisks and backticks (or truncates a step title) with no error
+   to catch it.
+8. Annotate JSON with the `jsonc` tag, not `json` (JSON has no comments; in a `json` fence
+   your annotation comments render as literal code lines). Old-style `{#mark}` brace
+   annotations do nothing — use the `!` comment syntax.
+9. `<Tooltip>` needs a non-empty `tip=` and wraps inline content only: never wrap block
+   content, never nest tooltips.
+10. One `<Subsection>` marker per markdown element, as its first line; spell the type
+    exactly (`activity`, `do-now`) — a mistyped value degrades silently to a plain h2 with
+    no pill.
+11. Every iframe carries `credentialless="true"`, explicit `width`/`height`, and a
+    descriptive `title`. Only reference image URLs you were actually given; never invent file
+    ids or paths.
+12. Section markdown starts at `##`; short/inline fields open with no heading at all — `#`
+    is never used anywhere. Every paragraph is one continuous source line (a line break
+    inside a paragraph becomes a visible `<br>`).
+
+### Failure modes (what breaks rendering)
 
 | If you write... | The learner sees... |
 | --- | --- |
-| A component outside the nine listed, or a lowercase name like `<alert>` | Runtime error box / bare unstyled element |
+| A component outside the ten listed, or a lowercase name like `<alert>` | Runtime error box / bare unstyled element |
 | An HTML comment line (`<!-- ... -->`) anywhere in the source | Compile error for the entire element |
 | `class=` instead of `className=`, or any other raw-HTML-style attribute | Element renders unstyled; the styling is missing silently |
 | An unclosed code fence | The rest of the document becomes code text |
@@ -454,8 +585,34 @@ Anti-AI-slop rules, applied to all prose:
 | A `<Tooltip>` without a non-empty `tip=` | The phrase renders as plain text: no underline, no bubble. Nothing errors — check your source |
 | Nested tooltips (a `<Tooltip>` trigger wrapping another `<Tooltip>`) | Unsupported; behavior is undefined. Keep one note per phrase |
 | Block content or a multi-paragraph explanation wrapped in a `<Tooltip>` | A cramped scrolling bubble that breaks out of the sentence; use an Accordion for that depth |
+| A `<Subsection>` with a mistyped `type` (e.g. `activty`) | Rule + plain h2 title, no pill: nothing errors, so check the spelling (`activity`, `do-now`) in your source |
 
-## Examples
+## Recipes / workflows
+
+**Write a lesson section (a markdown element's `code`).**
+
+1. Pick building blocks from the table above — the simplest thing that works; interactive
+   layouts only when they teach better.
+2. Read the example in `examples/` that matches what you are about to write before writing
+   it (see Examples as fixtures).
+3. Write per the reference sections: open with the concrete goal, keep one coherent example
+   throughout, close with a small transfer exercise (Designing for the learner). For
+   anything beyond mark/fold/collapse annotations, read
+   [reference/annotations.md](reference/annotations.md) first.
+4. Run the pre-output checklist before emitting.
+
+**Write content for a short/inline field (question, hint, prompt).**
+
+1. Same mechanics as above, minus section structure: inline prose that must not open with a
+   heading; `#` is never used anywhere.
+2. Keep it to what fits inside its component — optional depth belongs in an Accordion or the
+   surrounding prose, not in a short field.
+
+## Examples as fixtures
+
+`examples/` holds worked MDX documents; each is verified by a gate (`npm run
+verify:codehike-skill`) that compiles it through the exact production `mdxOptions` and renders
+it without throwing — they must stay copy-paste-able into a real element's content field.
 
 - [examples/annotated-code.mdx](examples/annotated-code.mdx): plain fences with meta flags,
   inline highlighted code, and the everyday annotations (mark, tooltip, fold, collapse,
@@ -465,5 +622,42 @@ Anti-AI-slop rules, applied to all prose:
 - [examples/terms.mdx](examples/terms.mdx): prose tooltips in their four documented
   placements: paragraph, list item with highlighted inline code in the trigger, GFM table
   cell, and Alert body.
+- [examples/note-blocks.mdx](examples/note-blocks.mdx): a typed NoteBlock with a table
+  body and a prose block with a `title` override.
+- [examples/subsections.mdx](examples/subsections.mdx): both `<Subsection>` types: an
+  Activity with its content under `###` headings, and a short Do Now beat.
 
 Read the example that matches what you are about to write before writing it.
+
+## Pre-output checklist
+
+1. Raw MDX only — no preamble, no wrapping fence around the answer?
+2. Every JSX tag is one of the ten listed components (PascalCase); wrappers use `className=`,
+   not `class=`?
+3. No HTML comment lines anywhere; internal notes as `{/* */}` or omitted entirely?
+4. Every code fence closed, with no backtick on its fence line; annotated JSON tagged
+   `jsonc`?
+5. Hike syntax only inside Scrollycoding/Spotlight/CodeWithTabs: every step has exactly one
+   `!code` fence, repeated items use the double bang, and no prose precedes the first
+   `## !!steps`?
+6. No highlighted inline code in any step title, tab label, or `title`/`tip` attribute?
+7. Section markdown starts at `##`; short/inline fields open with no heading; every paragraph
+   is one continuous source line?
+8. `<Subsection>`: exactly one per element, first line, type spelled `activity`/`do-now`,
+   content under `###`?
+9. Every iframe has `credentialless="true"`, explicit size, and a `title`; every image URL was
+   actually given to you?
+10. Prose passes the anti-AI-slop rules: no banned vocabulary, no em dashes, straight quotes,
+    no chatbot residue?
+
+## Cross-reference map
+
+- **lms-elements** — owns the 11 authorable element types' `data` shapes and minimal records.
+  Hand off when the deliverable is a whole element record `{type, data}`; its CodeHike-routed
+  fields delegate their content back here and embed your output verbatim in those fields.
+- **lms-playground** — owns playground file sets (runtime choice, canonical package.json,
+  Tailwind 4, boot rules) as SandpackFiles maps or flat-root zips. Hand off when the
+  deliverable is a code-playground's files; its output lands in `code-playground.data.files.files`.
+- **lms-backup** — owns whole backup JSON files: envelope, id/rank fabrication schemes,
+  embedding records into files, the validation loop. It embeds your MDX verbatim into content
+  fields; JSON escaping is its job.

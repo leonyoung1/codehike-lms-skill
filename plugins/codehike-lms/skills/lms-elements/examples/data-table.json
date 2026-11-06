@@ -1,0 +1,13 @@
+{
+  "collection": "elements",
+  "id": "e00000000000010",
+  "type": "data-table",
+  "rank": "10",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "csv": "Name,Role\nAda Lovelace,Engineer"
+  }
+}

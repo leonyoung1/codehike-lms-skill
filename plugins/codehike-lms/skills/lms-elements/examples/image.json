@@ -1,0 +1,13 @@
+{
+  "collection": "elements",
+  "id": "e00000000000005",
+  "type": "image",
+  "rank": "05",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "url": "https://example.com/placeholder.png"
+  }
+}

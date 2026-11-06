@@ -1,0 +1,13 @@
+{
+  "collection": "elements",
+  "id": "e00000000000006",
+  "type": "youtube",
+  "rank": "06",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+  }
+}

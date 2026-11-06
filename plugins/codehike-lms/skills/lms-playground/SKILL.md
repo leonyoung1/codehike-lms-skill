@@ -1,6 +1,6 @@
 ---
 name: lms-playground
-description: Build runnable LMS2 code playgrounds as file sets for the in-browser WebContainers sandbox, either static or vite. Covers choosing between the two runtimes, canonical package.json / dev-port requirements, Tailwind 4 setup in both, and outputting as a SandpackFiles JSON map or an importable flat-root zip. Use when asked to create, generate, scaffold, or fix a code playground — exercise sandboxes, p5.js/Phaser demos, React/Svelte/Vite projects, static HTML+JS interactive pages — for LMS2 lesson content. Not for writing CodeHike MDX prose (use codehike-content) and not for editing the playground runtime itself (`src/lms/playground`).
+description: "Build runnable LMS2 code playgrounds as file sets for the in-browser WebContainers sandbox, either static or vite. Covers choosing between the two runtimes, canonical package.json / dev-port requirements, Tailwind 4 setup in both, and outputting as a SandpackFiles JSON map or an importable flat-root zip. Use when asked to create, generate, scaffold, or fix a code playground — exercise sandboxes, p5.js/Phaser demos, React/Svelte/Vite projects, static HTML+JS interactive pages — for LMS2 lesson content. Not for: raw CodeHike MDX prose (codehike-content), element records `{type, data}` (lms-elements), whole backup JSON files (lms-backup); and not for editing the playground runtime itself (`src/lms/playground`)."
 ---
 
 # LMS2 Code Playground Builder
@@ -8,6 +8,55 @@ description: Build runnable LMS2 code playgrounds as file sets for the in-browse
 You are producing a complete set of project files for an in-browser code playground: students see them in an editor and watch a live preview. The platform boots every preview the same way — `pnpm install`, then `pnpm run dev-port` with the assigned port injected as the `$PORT` environment variable. Your job is to make files that **boot on first load** and teach well.
 
 You have no access to the app or its source; this skill is your complete reference for what will work.
+
+## Where your output goes
+
+Your file set lands in a code-playground element — you emit the bare map or zip only:
+
+- The SandpackFiles map goes into `code-playground.data.files.files`, inside the
+  `{ activeFile, files, visibleFiles }` wrapper; the zip is the human-import form of that same
+  file set. The wrapper's full field set is documented by **lms-elements** (its code-playground
+  section) — this skill owns only the bare map itself.
+- Standalone consumers take your output as-is: machine consumers parse the raw JSON wholesale and
+  assign it straight into Sandpack's `files.files`; humans import the flat-root zip through LMS2's
+  ImportButton.
+- **lms-elements** delegates every code-playground file set to you and places your map in the
+  wrapper of the record it authors; **lms-backup** embeds that record verbatim into backup JSON
+  files — JSON escaping is its job, not yours.
+
+## Output contract
+
+The JSON form exists for machine consumers that parse your raw output wholesale and assign it straight into Sandpack's `files.files`. A bare map of `/`-prefixed paths to string contents is the only shape they accept: no markdown fences, no prose, no wrapper keys. The zip form exists for human import via LMS2's ImportButton: flat root, no dotfiles or lockfiles, explicit `dev-port`.
+
+### SandpackFiles JSON (machine-consumed)
+
+A single bare JSON object mapping file paths to string contents. Nothing else in the output — no markdown fences, no prose before or after, no wrapper keys:
+
+```json
+{
+  "/main.js": "…",
+  "/index.html": "<!DOCTYPE html>…"
+}
+```
+
+(the fence above only exists so this document can display it — your output is the object itself)
+
+- Every key starts with `/` (a bare `main.js` becomes a garbage file in the sandbox). Values are always strings.
+- **Primary student-editable file first** — consumers use the first key as the active editor tab.
+- Always ship an explicit `dev-port` script; no consumer rewrites your package.json for you.
+- Creating from scratch: output the complete tree.
+- Editing existing files (you were given the current map): changed/added files only is fine — consumers merge into the current set. To delete a file, or to rebuild wholesale, output the full updated tree instead.
+
+### ZIP (human-imported)
+
+A flat-rooted archive named `<slug>.zip` (`bouncing-ball.zip`, not `project/bouncing-ball.zip`) containing exactly the project files:
+
+- No top-level folder — importers don't strip one and a stray root folder breaks every path.
+- No dotfiles, no `node_modules/`, no build output, no lockfiles.
+- Same package.json rules as JSON (explicit `dev-port` always; the importer only auto-injects it for vite/astro zips).
+- Put the primary student-editable file first in the archive — it becomes the active tab.
+
+Planned (not yet wired): honoai's playground generation will adopt this skill as its single source, replacing the hardcoded prompts it uses today. When that lands, the rules above are the contract — don't relax them (extra keys, pretty-printed wrappers) without checking LMS2's `CodeAgent.tsx` and `GenStaticPlaygroundType.tsx`.
 
 ## Choosing a runtime
 
@@ -82,43 +131,6 @@ export default defineConfig({ plugins: [react(), tailwindcss()] });
 { "scripts": { "dev": "vite", "dev-port": "vite --port $PORT" } }
 ```
 
-## Output format
-
-### SandpackFiles JSON (machine-consumed)
-
-A single bare JSON object mapping file paths to string contents. Nothing else in the output — no markdown fences, no prose before or after, no wrapper keys:
-
-```json
-{
-  "/main.js": "…",
-  "/index.html": "<!DOCTYPE html>…"
-}
-```
-
-(the fence above only exists so this document can display it — your output is the object itself)
-
-- Every key starts with `/` (a bare `main.js` becomes a garbage file in the sandbox). Values are always strings.
-- **Primary student-editable file first** — consumers use the first key as the active editor tab.
-- Always ship an explicit `dev-port` script; no consumer rewrites your package.json for you.
-- Creating from scratch: output the complete tree.
-- Editing existing files (you were given the current map): changed/added files only is fine — consumers merge into the current set. To delete a file, or to rebuild wholesale, output the full updated tree instead.
-
-### ZIP (human-imported)
-
-A flat-rooted archive named `<slug>.zip` (`bouncing-ball.zip`, not `project/bouncing-ball.zip`) containing exactly the project files:
-
-- No top-level folder — importers don't strip one and a stray root folder breaks every path.
-- No dotfiles, no `node_modules/`, no build output, no lockfiles.
-- Same package.json rules as JSON (explicit `dev-port` always; the importer only auto-injects it for vite/astro zips).
-- Put the primary student-editable file first in the archive — it becomes the active tab.
-
-## Editing an existing playground
-
-When given current files plus a change request:
-
-1. Output changed/added files only (JSON) or the complete updated tree (zip) — see above.
-2. For JSON output, include `/changes.md`: short plain-language markdown explaining what you changed and why, for the person reading your answer ("Added a score counter that updates when…"). It is stripped from the sandbox and rendered as your explanation — if it's missing, your answer renders empty. Never put `changes.md` in a zip: importers have no renderer there and it becomes a stray file.
-
 ## Quality bar
 
 - **Tailwind 4 styling in every playground**, both runtimes (browser tag / vite plugin) — no hand-rolled utility CSS.
@@ -126,14 +138,61 @@ When given current files plus a change request:
 - No giant blob files: split by purpose (`main.js`, `physics.js`…; `App.jsx`, `components/…`). One job per file.
 - Must boot on first load: no missing imports, no typo'd specifiers, correct `dev-port`. If you can't be sure a library loads from CDN ESM, choose vite and declare it as a dependency instead.
 
-## Examples (read before emitting output)
+## Hard rules
+
+1. Every key of a JSON map starts with `/` and every value is a string — a bare `main.js` becomes
+   a garbage file in the sandbox.
+2. Static imports resolve without a bundler: relative paths *with* the file extension or jsDelivr
+   ESM URLs only — no bare specifiers, no extensionless imports (there is no resolver, only the
+   browser).
+3. Always ship an explicit `dev-port` script that respects `$PORT`; never hardcode a port — no
+   consumer rewrites your package.json for you, and the zip importer only auto-injects it for
+   vite/astro zips.
+4. The static `package.json` is exactly the canonical shape (one dev server, nothing else) — don't
+   add scripts or dependencies beyond it; the vite set stays lean because the sandbox installs on
+   every load.
+5. JSON output is one bare map and nothing else: no markdown fences, no prose before or after, no
+   wrapper keys — machine consumers parse your raw output wholesale.
+6. Zips are flat-rooted with exactly the project files: no top-level folder (importers don't strip
+   one), no dotfiles, no `node_modules/`, no build output, no lockfiles.
+7. The primary student-editable file comes first — first key in a JSON map, first entry in a zip;
+   consumers make it the active editor tab.
+8. Multi-page static playgrounds are real `.html` files linked with plain `<a href>` — no
+   history-API routing (`pushState`/`replaceState`, extensionless routes).
+9. `/changes.md` belongs in JSON edit output only: stripped from the sandbox and rendered as your
+   explanation (missing → your answer renders empty); never in a zip, where it becomes a stray file.
+10. Plain JavaScript by default; TypeScript only when explicitly asked — then also add
+    `tsconfig.json` plus the matching `@types/*` packages.
+
+## Recipes / workflows
+
+**Create a playground from scratch.**
+
+1. Choose the runtime (Choosing a runtime) — default to static for anything that is fundamentally
+   an HTML+JS page; vite when you need a framework or a build step.
+2. Follow that runtime's rules: canonical `package.json` with `dev-port` respecting `$PORT`,
+   Tailwind 4 wired, imports resolvable without a bundler (static) or declared in package.json
+   (vite).
+3. Read the matching example before emitting (Examples as fixtures) and match its shape.
+4. Run the pre-output checklist below.
+
+**Edit an existing playground.**
+
+When given current files plus a change request:
+
+1. Output changed/added files only (JSON) or the complete updated tree (zip) — see above.
+2. For JSON output, include `/changes.md`: short plain-language markdown explaining what you changed and why, for the person reading your answer ("Added a score counter that updates when…"). It is stripped from the sandbox and rendered as your explanation — if it's missing, your answer renders empty. Never put `changes.md` in a zip: importers have no renderer there and it becomes a stray file.
+
+## Examples as fixtures
 
 Two complete worked outputs ship with this skill — one per runtime. Each is a task line plus the exact JSON an agent should emit:
 
 - `examples/static-p5.md` — static p5.js bouncing-ball exercise (CDN ESM import, canonical package.json).
 - `examples/vite-react.md` — lean Vite + React tabs demo with Tailwind 4.
 
-Match their shape: file naming sensibility, comment density, dependency discipline, and key order (primary editable file first).
+Each is verified by a gate (`npm run verify:lms-playground-skill`) that parses its fenced map the way the platform does and asserts the output contracts (bare maps, canonical/lean package.json, Tailwind 4 wiring) — they must stay copy-paste-able as real playground file sets.
+
+Match their shape: file naming sensibility, comment density, dependency discipline, and key order (primary editable file first). Read the example that matches what you are about to build before emitting output.
 
 ## Pre-output checklist
 
@@ -145,8 +204,15 @@ Match their shape: file naming sensibility, comment density, dependency discipli
 6. Edit request → partial JSON map + `/changes.md` (or full tree if deleting files); never `changes.md` in a zip?
 7. Output is exactly one bare JSON map — or exactly one zip — nothing else?
 
-## Why this exact output format
+## Cross-reference map
 
-The JSON form exists for machine consumers that parse your raw output wholesale and assign it straight into Sandpack's `files.files`. A bare map of `/`-prefixed paths to string contents is the only shape they accept: no markdown fences, no prose, no wrapper keys. The zip form exists for human import via LMS2's ImportButton: flat root, no dotfiles or lockfiles, explicit `dev-port`.
-
-Planned (not yet wired): honoai's playground generation will adopt this skill as its single source, replacing the hardcoded prompts it uses today. When that lands, the rules above are the contract — don't relax them (extra keys, pretty-printed wrappers) without checking LMS2's `CodeAgent.tsx` and `GenStaticPlaygroundType.tsx`.
+- **codehike-content** — owns MDX mechanics, annotations, step layouts, prose style. Hand off when
+  the deliverable is raw CodeHike MDX for an element's content field; a code-playground's
+  `instruction` and `hint` fields are CodeHike-routed and delegate to it.
+- **lms-elements** — owns the 11 authorable element types' `data` shapes and minimal records. Hand
+  off when the deliverable is a whole element record `{type, data}`; its code-playground section
+  delegates file-set authoring back here and documents the `files` wrapper your map lands in
+  (`code-playground.data.files.files`).
+- **lms-backup** — owns whole backup JSON files: envelope, id/rank fabrication schemes, embedding
+  records into files, the validation loop. It embeds element records (with your file set inside)
+  verbatim; JSON escaping is its job.

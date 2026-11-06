@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "codehike-lms",
-  "version": "1.5.0",
-  "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams.",
+  "version": "2.0.0",
+  "description": "Author complete LMS2 lesson content: CodeHike MDX sections, element records for all 11 types, runnable static/Vite playgrounds, and whole backup files that validate clean.",
   "author": {
     "name": "Leon Young",
     "url": "https://github.com/leonyoung1"
@@ -13,6 +13,8 @@
     "lms2",
     "mdx",
     "lessons",
+    "elements",
+    "backups",
     "education"
   ]
 }

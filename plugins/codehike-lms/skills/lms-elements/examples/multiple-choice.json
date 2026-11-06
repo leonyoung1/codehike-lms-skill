@@ -1,0 +1,26 @@
+{
+  "collection": "elements",
+  "id": "e00000000000003",
+  "type": "multiple-choice",
+  "rank": "03",
+  "active": true,
+  "access": 200,
+  "isSubmitType": true,
+  "submissionRequired": true,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "question": "Which value does `x` hold after the loop?",
+    "hint": "Count how many times the condition is true before it flips.",
+    "options": [
+      {
+        "text": "0",
+        "explanation": "The loop never runs because the start index is out of range."
+      },
+      {
+        "text": "3"
+      }
+    ],
+    "correctAnswer": 0
+  }
+}

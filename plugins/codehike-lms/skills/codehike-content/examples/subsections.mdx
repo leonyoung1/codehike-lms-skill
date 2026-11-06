@@ -1,0 +1,27 @@
+{/* FORMAT DEMO (not lesson material): Subsection is a student-visible structural heading inside markdown element content. It renders an eyebrow pill above a real h2 title and marks named activities within a section. One per element, as its first line; time is not an attribute (it lives on the element's instructional note). */}
+
+<Subsection type="activity" title="Build a countdown timer"/>
+
+### Start from the target value
+
+The state holds how many seconds are left. Zero means the timer has finished.
+
+```js timer.js -nc
+let secondsLeft = 3;
+```
+
+### Tick once per second
+
+Each tick subtracts one and stops at zero, so the interval never runs negative.
+
+```js timer.js -nc
+setInterval(() => {
+  if (secondsLeft > 0) {
+    secondsLeft -= 1;
+  }
+}, 1000);
+```
+
+<Subsection type="do-now" title="If you beat this AI, tell me how"/>
+
+Play the demo against the built-in AI. If you find a move it never answers to, write it down before class.

@@ -1,0 +1,13 @@
+{
+  "collection": "elements",
+  "id": "e00000000000011",
+  "type": "image-gen",
+  "rank": "11",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "instructions": "A simple diagram showing how a browser request reaches a server."
+  }
+}

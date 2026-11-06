@@ -1,0 +1,13 @@
+{
+  "collection": "elements",
+  "id": "e00000000000001",
+  "type": "markdown",
+  "rank": "01",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "code": "## Getting started\n\nReplace this placeholder with your section content. Inline code like `npm install` works anywhere prose does."
+  }
+}

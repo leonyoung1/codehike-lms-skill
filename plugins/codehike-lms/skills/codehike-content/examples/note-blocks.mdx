@@ -1,0 +1,26 @@
+{/* FORMAT DEMO (not lesson material): NoteBlock is a collapsible, tinted card with an icon and a colored header. The type picks the icon, colors, border, and default header label; the body is free-form markdown (prose, lists, tables). Blocks are open by default. */}
+
+## Staff-note scaffolds
+
+A NoteBlock groups related coaching content under a recognizable header. The `type`
+attribute selects one of three typed looks (or omit it for a colorless card). The body is
+any markdown: the table below keeps each coaching angle on its own labeled row.
+
+<NoteBlock type="teaching-tips">
+<table className="note-block-table">
+  <tbody>
+    <tr><td>Facilitation</td><td>How to run the activity: grouping, roles, timing.</td></tr>
+    <tr><td>Coaching</td><td>What to say or ask when students get stuck.</td></tr>
+    <tr><td>Adaptation</td><td>How to adjust for struggling or advanced students.</td></tr>
+  </tbody>
+</table>
+</NoteBlock>
+
+## Prose body and title override
+
+The body can be plain prose instead of a table. A `title` attribute overrides the type's
+default header label, which is useful when a note carries two blocks of the same kind.
+
+<NoteBlock type="answer-and-explanation" title="Answer and explanation — round 2">
+State the answer, then explain why it is correct and connect it back to the lesson.
+</NoteBlock>

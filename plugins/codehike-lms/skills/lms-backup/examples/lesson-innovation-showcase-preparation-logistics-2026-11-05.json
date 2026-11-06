@@ -1,0 +1,259 @@
+{
+  "format": "lms-backup",
+  "version": 1,
+  "kind": "lesson",
+  "exportedAt": "2026-11-05T17:29:23.059Z",
+  "source": {
+    "id": "bxs235x93b8o5z7",
+    "name": "Logistics",
+    "pbUrl": "https://pb25-physics.up.railway.app/"
+  },
+  "records": [
+    {
+      "collection": "lessons",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "name": "Logistics",
+      "rank": "A",
+      "translations": null,
+      "unitId": "k8i5n0jiatdn9rn",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "bxs235x93b8o5z7"
+    },
+    {
+      "collection": "sections",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "lessonId": "bxs235x93b8o5z7",
+      "name": "Two Week Overview",
+      "objectives": "",
+      "rank": "A",
+      "translations": null,
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "tv18c8vt19861f7"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "description": "",
+        "isInternal": false,
+        "label": "Two-Week Agenda",
+        "placement": "right",
+        "updatedBy": "",
+        "url": "https://docs.google.com/spreadsheets/d/1ouRjn1Hrj-Dq_13T8x_EIdYZN7z5NgrqRLRLzGYUmiI/edit?gid=221054578#gid=221054578",
+        "variant": "default"
+      },
+      "isSubmitType": false,
+      "rank": "A",
+      "sectionId": "tv18c8vt19861f7",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "link",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "3s087t4hmg9i9w1"
+    },
+    {
+      "collection": "sections",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "lessonId": "bxs235x93b8o5z7",
+      "name": "Week 2 Daily Agendas",
+      "objectives": "",
+      "rank": "M",
+      "translations": null,
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "20rg4o787f79ik3"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 9 Agenda (Thursday 5/7) \n</div>\n\n<blockquote>\n### 12:30 Status Check & Stand Ups\n  \n\n\n### 12:45 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Prototype Demo  & Presentation Work\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "akpsullivan@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "1",
+      "sectionId": "20rg4o787f79ik3",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "x379qurs07o1ts2"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 8 Agenda (Wednesday 5/6) \n</div>\n\n<blockquote>\n### 12:30 Status Check & Stand Ups\n  \n\n\n### 12:45 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Prototype Demo  & Presentation Work\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "akpsullivan@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "2",
+      "sectionId": "20rg4o787f79ik3",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "akpsullivan@gmail.com",
+      "id": "fcb2l2qtbm01g0d"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 7 Agenda (Tuesday 5/5) \n</div>\n\n<blockquote>\n### 12:30 Status Check & Stand Ups\n  \n\n\n### 12:45 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Exhibition Practice & Peer Feedback\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "5",
+      "sectionId": "20rg4o787f79ik3",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "akpsullivan@gmail.com",
+      "id": "p9938e338l9hq9s"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 6 Agenda (Monday 5/4) \n</div>\n\n<blockquote>\n### 12:30 Status Check & Stand Ups\n  \n<Alert type=\"tip\" title=\"Pro Tip\">\nUse your [Summary of Work Accomplishments](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj) document ass a starting point for your team conversation and delegation of tasks.\n</Alert>\n\n\n### 12:45 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Prototype Demo  & Presentation Work\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "A",
+      "sectionId": "20rg4o787f79ik3",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "32p45l06whce19i"
+    },
+    {
+      "collection": "sections",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "lessonId": "bxs235x93b8o5z7",
+      "name": "Week 1 Daily Agendas",
+      "objectives": "",
+      "rank": "Z",
+      "translations": null,
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "6504o29b4g14v72"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 5 Agenda (Friday 5/1)\n</div>\n\n<blockquote>\n### 12:30 Status Check & Stand Ups\n\n### 1:00 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Career Caddy Practice Presentation\n- [Open the Peer Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLScZ7rYnmXm7lIEXHmWS6nn7sVDmsj8yuS04Lwz5Mv2xQEuGsQ/viewform?usp=header)\n\n### 2:30 Prototype Demo  & Presentation Work\n<Alert type=\"important\" title=\"Deliverables\">\n[Summary of Work Accomplishments](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj)\n  \n\n  \n</Alert>\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "0V",
+      "sectionId": "6504o29b4g14v72",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "gsvom529tz5gti3"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 4 Agenda (Thursday 4/30)\n</div>\n\n<blockquote>\n### 12:30 Crafting a Powerful Presentation for an Exhibition\n\n<Alert type=\"important\" title=\"Deliverables\">\n1. [Hook & Explain](https://docs.google.com/document/d/13MS7bejKIOl5c9Mzzm-uH3mByAQXMamY-vO_ywDifHU/edit?tab=t.0#heading=h.fqcak6nunf8o)\n  \n2. [Exhibition Booth Supplies](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj)\n  \n\n  \n</Alert>\n\n### 1:00 Prototype Demo  & Presentation Work\n\n### 2:00 Break\n\n### 2:15 Prototype Demo  & Presentation Work\n- Exhibition Booth Idea Checks\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "1",
+      "sectionId": "6504o29b4g14v72",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "akpsullivan@gmail.com",
+      "id": "33o68qt8aftfmpd"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 3 Agenda (Wednesday 4/29)\n</div>\n\n<blockquote>\n### 12:30 Crafting a User Story\n\n<Alert type=\"important\" title=\"Deliverable\">\n[User Story](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj)\n</Alert>\n### 1:00 Presentation Work - Incorporating a User Story \n- Work on prototypes when finished\n\n### 2:00 Break\n\n### 2:15 Prototype Demo & Presentation Work\n- User Story Checks\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "2",
+      "sectionId": "6504o29b4g14v72",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "uxpy1fs737r9025"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 2 Agenda (Tuesday 4/28)\n</div>\n\n<blockquote>\n### 12:30 Introduction\n\n### 12:45 Prototype Demo Work\n  \n<Alert type=\"important\" title=\"Deliverable\">\n[Turn in prototype link or video](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj)\n</Alert>\n\n### 2:00 Break\n\n### 2:15 Prototype Demo / Peer Feedback\n[Demo Rotations](https://docs.google.com/spreadsheets/d/1yUr3G5P2HcI11x1NaAZ9SJ0TX2egWlNkHnXnpaXmqGQ/edit?usp=sharing)\n\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "abigailjosephoef@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "5",
+      "sectionId": "6504o29b4g14v72",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "08000iv8r527ka5"
+    },
+    {
+      "collection": "elements",
+      "access": 200,
+      "active": true,
+      "courseId": "ms40ae3h05g14wd",
+      "data": {
+        "code": "\n<div class=\"bg-doNow text-doNow-foreground px-4 py-1 my-1 rounded-md\">\n  ## Day 1 Agenda (Monday 4/27)\n</div>\n\n<blockquote>\n### 12:30 Introduction\n- #### [Enroll in the Google Classroom](https://classroom.google.com/c/ODYwNzI0MDg3NzEw?cjc=tm7yeefu)\n### 12:45 Presentation Prep\n  \n<Alert type=\"important\" title=\"Deliverable\">\n[Turn in Presentation Draft #1](https://lms2.org/course/ms40ae3h05g14wd/fl5994kd39055ua/8qb664u424i6diw/3svj2cwuw1bqonj)\n</Alert>\n### 1:00 Group Presentation / Peer Feedback\n- #### [Peer Feedback Form](https://docs.google.com/forms/d/1spLOcrDaU3A1mahEBmS-W8LdB16dodUChpUPBplzafQ/preview)\n### 2:00 Break\n### 2:15 Group Presentation / Peer Feedback\n- #### [Peer Feedback Form](https://docs.google.com/forms/d/1spLOcrDaU3A1mahEBmS-W8LdB16dodUChpUPBplzafQ/preview)\n### 3:30 End of Class Reflection\n</blockquote>",
+        "updatedBy": "akpsullivan@gmail.com"
+      },
+      "isSubmitType": false,
+      "rank": "A",
+      "sectionId": "6504o29b4g14v72",
+      "submissionRequired": false,
+      "translations": null,
+      "type": "markdown",
+      "updatedBy": "abigailjosephoef@gmail.com",
+      "id": "4duq0u3md6yxs3v"
+    },
+    {
+      "collection": "instructional_notes",
+      "elementId": "x379qurs07o1ts2",
+      "courseId": "ms40ae3h05g14wd",
+      "title": "Daily agendas",
+      "time": 60,
+      "active": true,
+      "note": "Each day's agenda is its own markdown element. If a day's plan changes, edit that element in place rather than adding a new one — the section order is the week's timeline. The 3:30 reflection links into the Daily Reflections unit.",
+      "id": "n00000000000099"
+    }
+  ]
+}

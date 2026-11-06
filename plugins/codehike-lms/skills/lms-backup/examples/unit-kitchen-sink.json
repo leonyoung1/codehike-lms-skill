@@ -1,0 +1,310 @@
+{
+  "format": "lms-backup",
+  "version": 1,
+  "kind": "unit",
+  "records": [
+    {
+      "collection": "units",
+      "id": "u00000000000001",
+      "courseId": "c00000000000001",
+      "rank": "01",
+      "name": "Kitchen Sink",
+      "active": true,
+      "access": 200,
+      "translations": {
+        "es": { "name": "Todo en Uno" },
+        "pt": { "name": "Tudo em Um" }
+      }
+    },
+    {
+      "collection": "lessons",
+      "id": "l00000000000001",
+      "courseId": "c00000000000001",
+      "unitId": "u00000000000001",
+      "rank": "01",
+      "name": "First Steps",
+      "active": true,
+      "access": 200,
+      "translations": {
+        "es": { "name": "Primeros pasos" }
+      }
+    },
+    {
+      "collection": "lessons",
+      "id": "l00000000000002",
+      "courseId": "c00000000000001",
+      "unitId": "u00000000000001",
+      "rank": "02",
+      "name": "Second Steps",
+      "active": true,
+      "access": 200
+    },
+    {
+      "collection": "sections",
+      "id": "s00000000000001",
+      "courseId": "c00000000000001",
+      "lessonId": "l00000000000001",
+      "rank": "01",
+      "name": "Basics",
+      "objectives": "Explain how variables store values and use them in expressions.",
+      "active": true,
+      "access": 200
+    },
+    {
+      "collection": "sections",
+      "id": "s00000000000002",
+      "courseId": "c00000000000001",
+      "lessonId": "l00000000000001",
+      "rank": "02",
+      "name": "Practice",
+      "objectives": "",
+      "active": true,
+      "access": 200,
+      "translations": {
+        "es": { "name": "Práctica" }
+      }
+    },
+    {
+      "collection": "sections",
+      "id": "s00000000000003",
+      "courseId": "c00000000000001",
+      "lessonId": "l00000000000002",
+      "rank": "01",
+      "name": "Wrap-up",
+      "objectives": "",
+      "active": true,
+      "access": 200
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000001",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "01",
+      "type": "markdown",
+      "active": true,
+      "access": 200,
+      "data": {
+        "code": "## Variables hold values\n\nA variable is a named box that stores one value.\n\n```js\nlet score = 0;\nscore = score + 1;\nconsole.log(score); // 1\n```\n\nThe `let` keyword creates the box; the `=` sign puts a value in it."
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000002",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "02",
+      "type": "multiple-choice",
+      "active": true,
+      "access": 200,
+      "isSubmitType": true,
+      "submissionRequired": true,
+      "data": {
+        "question": "What does `score` hold after running `score = score + 2`, if it started at 5?",
+        "options": [
+          { "text": "7", "explanation": "Adding 2 to the old value of 5 gives 7." },
+          { "text": "2" }
+        ],
+        "correctAnswer": 0
+      },
+      "translations": {
+        "es": {
+          "data": {
+            "question": "¿Qué valor tiene `score` después de ejecutar `score = score + 2`, si empezó en 5?"
+          }
+        }
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000003",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "03",
+      "type": "free-response",
+      "active": true,
+      "access": 200,
+      "isSubmitType": true,
+      "submissionRequired": true,
+      "data": {
+        "question": "What number does `10 - 4` produce?",
+        "answer": "6"
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000004",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "04",
+      "type": "code-playground",
+      "active": true,
+      "access": 200,
+      "isSubmitType": true,
+      "submissionRequired": true,
+      "data": {
+        "files": {
+          "activeFile": "/main.js",
+          "files": {
+            "/main.js": "// Clicking the button should add 1 to the score shown on the page.\nlet score = 0;\n\nconst button = document.querySelector(\"#add\");\nconst display = document.querySelector(\"#score\");\n\nbutton.addEventListener(\"click\", () => {\n  // TODO: update score and the page here.\n});\n",
+            "/index.html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\" />\n<title>Counter</title>\n<script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4\"></script>\n</head>\n<body class=\"p-8 bg-slate-100\">\n  <h1 id=\"score\" class=\"text-3xl font-bold\">0</h1>\n  <button id=\"add\" class=\"mt-4 px-4 py-2 rounded bg-blue-600 text-white\">Add one</button>\n  <script type=\"module\" src=\"/main.js\"></script>\n</body>\n</html>\n",
+            "/package.json": "{\n  \"scripts\": {\n    \"dev\": \"servor --reload\",\n    \"dev-port\": \"servor . index.html $PORT --reload\",\n    \"start\": \"servor --reload\"\n  },\n  \"dependencies\": {\n    \"servor\": \"^4.0.2\"\n  },\n  \"devDependencies\": {}\n}\n"
+          },
+          "visibleFiles": ["/main.js", "/index.html"]
+        },
+        "environment": "static",
+        "instruction": "Build a counter: clicking the button should increase the score shown on the page."
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000005",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "05",
+      "type": "image",
+      "active": true,
+      "access": 200,
+      "data": {
+        "url": "https://example.com/placeholder.png",
+        "description": "A diagram of the counter's state."
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000006",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000001",
+      "rank": "06",
+      "type": "youtube",
+      "active": true,
+      "access": 200,
+      "data": {
+        "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000007",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "rank": "01",
+      "type": "file-submission",
+      "active": true,
+      "access": 200,
+      "isSubmitType": true,
+      "submissionRequired": true,
+      "data": {
+        "question": "Upload a screenshot of your counter after clicking the button three times."
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000008",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "rank": "02",
+      "type": "link",
+      "active": true,
+      "access": 200,
+      "data": {
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        "label": "MDN JavaScript docs",
+        "isInternal": false
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000009",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "rank": "03",
+      "type": "feedback",
+      "active": true,
+      "access": 200,
+      "isSubmitType": true,
+      "data": {
+        "question": "Anything unclear about variables so far?"
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000010",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "rank": "04",
+      "type": "data-table",
+      "active": true,
+      "access": 200,
+      "data": {
+        "csv": "Variable,Value\nscore,0\ntotal,10"
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000011",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "rank": "05",
+      "type": "image-gen",
+      "active": true,
+      "access": 200,
+      "data": {
+        "instructions": "A simple diagram of a variable as a labeled box holding one value."
+      }
+    },
+    {
+      "collection": "elements",
+      "id": "e00000000000012",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000003",
+      "rank": "01",
+      "type": "markdown",
+      "active": true,
+      "access": 200,
+      "data": {
+        "code": "## Check yourself\n\nExplain in your own words what `score = score + 1` does, and why the right-hand side uses the old value."
+      }
+    },
+    {
+      "collection": "instructional_notes",
+      "id": "n00000000000001",
+      "courseId": "c00000000000001",
+      "unitId": "u00000000000001",
+      "title": "Kitchen Sink — unit overview",
+      "time": 300,
+      "active": true,
+      "note": "Walk through each element type once before letting students explore. The code-playground in Basics is the only one that needs to boot — check its preview loads before class."
+    },
+    {
+      "collection": "instructional_notes",
+      "id": "n00000000000002",
+      "courseId": "c00000000000001",
+      "lessonId": "l00000000000002",
+      "title": "Second Steps pacing",
+      "time": 180,
+      "active": true,
+      "note": "Most groups finish Wrap-up early; have them re-explain their variable answer to a partner if they do."
+    },
+    {
+      "collection": "instructional_notes",
+      "id": "n00000000000003",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000002",
+      "title": "Practice facilitation",
+      "time": 240,
+      "active": true,
+      "note": "Circulate while students work. Common stuck point: forgetting that the table's first row is the header, not data."
+    },
+    {
+      "collection": "instructional_notes",
+      "id": "n00000000000004",
+      "courseId": "c00000000000001",
+      "elementId": "e00000000000004",
+      "title": "Counter exercise answer",
+      "time": 120,
+      "active": true,
+      "note": "Expected solution: `score = score + 1;` then update the display's text. If a student changes the button's label instead of the heading, ask what should change when the score changes."
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # CodeHike LMS
 
-A Codex plugin by Leon Young for writing student-facing LMS2 lessons as CodeHike MDX. It bundles the `codehike-content` skill, its annotation reference, and two example documents.
+A Codex plugin by Leon Young for authoring complete student-facing LMS2 content. It bundles four skills that hand off to each other: `codehike-content` writes lesson sections and inline fields as CodeHike MDX; `lms-elements` authors complete records for all 11 element types; `lms-playground` builds runnable static or Vite playground file sets for the in-browser sandbox; `lms-backup` assembles whole course/unit/lesson/section backup files that validate clean against the platform's import validator.
 
-Use it for annotated code, Scrollycoding walkthroughs, Spotlight comparisons, code tabs, Mermaid diagrams, alerts, accordions. The output is raw MDX that you can paste into an LMS2 lesson element's `code` field.
+Use it for annotated code, Scrollycoding walkthroughs, Spotlight comparisons, code tabs, Mermaid diagrams, alerts and accordions (`codehike-content`); quiz questions with hints and explanations plus image/video/link/data-table elements (`lms-elements`); p5.js/Phaser or React/Vite exercise sandboxes (`lms-playground`); and ready-to-import backup JSON for a whole unit, lesson, or section (`lms-backup`).
 
 ## Install
 
@@ -40,19 +40,20 @@ This is a skills-only plugin. It includes no MCP server, hooks, application conn
 
 ## Use
 
-Select **CodeHike LMS** in the plugin picker, or invoke its bundled skill:
+Select **CodeHike LMS** in the plugin picker, or invoke a bundled skill by name:
 
 ```text
 $codehike-content Write an LMS2 lesson element explaining Python for loops to beginners. Include a small annotated example and a practice question.
 ```
 
-Other requests to try:
+Other requests to try (each routes to the right skill):
 
-- Create a three-step Scrollycoding walkthrough of JavaScript fetch and error handling.
-- Compare JavaScript map and Python list comprehensions using CodeWithTabs.
-- Write an LMS2 lesson explaining request validation with a small Mermaid diagram.
+- Create a three-step Scrollycoding walkthrough of JavaScript fetch and error handling. → `codehike-content`
+- Build a static p5.js playground exercise where students make dots grow as they appear. → `lms-playground`
+- Create a multiple-choice element record about Python loops, with hint and explanation. → `lms-elements`
+- Make an LMS2 backup file: a new unit with two lessons, each containing a markdown section and a code playground. → `lms-backup`, delegating content to the other three
 
-The skill returns the lesson content without a preamble or an outer code fence. Copy the full response into one LMS2 lesson element.
+The skills return raw content without a preamble or an outer fence: MDX for a lesson element's `code` field, a bare `{type, data}` record, a bare SandpackFiles map (or flat-root zip), or a complete backup JSON file.
 
 ## Share
 
@@ -65,9 +66,10 @@ For public directory distribution, follow OpenAI's [plugin submission documentat
 In this repository the plugin lives under `plugins/codehike-lms/`, exposed by `.agents/plugins/marketplace.json`. The package itself contains:
 
 - `plugin.json` + `.codex-plugin/plugin.json`: plugin identity, version, and metadata (portable Agent Plugins manifest plus Codex compatibility overlay); OpenAI presentation settings live in the root manifest's `interface` block.
-- `skills/codehike-content/SKILL.md`: lesson authoring instructions. Skills are discovered automatically from the fixed `skills/` directory — no manifest declaration needed. See [OpenAI's plugin packaging documentation](https://developers.openai.com/plugins/build/plugins).
-- `skills/codehike-content/reference/annotations.md`: annotation reference.
-- `skills/codehike-content/examples/`: annotated-code and interactive layout examples.
+- `skills/codehike-content/`: lesson authoring instructions (`SKILL.md`), its annotation reference (`reference/annotations.md`), and worked MDX examples (`examples/`). Skills are discovered automatically from the fixed `skills/` directory — no manifest declaration needed. See [OpenAI's plugin packaging documentation](https://developers.openai.com/plugins/build/plugins).
+- `skills/lms-elements/`: element record shapes for all 11 authorable types, with one gate-verified example record per type (`examples/*.json`).
+- `skills/lms-playground/`: static and Vite playground file-set rules (canonical package.json, CDN-only imports, Tailwind 4), with one worked example per runtime (`examples/*.md`).
+- `skills/lms-backup/`: backup JSON format — envelope, id/rank schemes, editing recipes, validation loop — with real UI exports plus a hand-crafted kitchen-sink unit file (`examples/*.json`).
 - `UPSTREAM.md`: source revision and packaging notes.
 
-The upstream skill is maintained from a private LMS repository. Its live rendering behavior remains the authority; this package cannot independently verify that renderer.
+The upstream skills are maintained from a private LMS repository. Their live rendering behavior remains the authority; this package cannot independently verify that renderer.

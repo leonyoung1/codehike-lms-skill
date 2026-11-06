@@ -1,0 +1,15 @@
+{
+  "collection": "elements",
+  "id": "e00000000000007",
+  "type": "file-submission",
+  "rank": "07",
+  "active": true,
+  "access": 200,
+  "isSubmitType": true,
+  "submissionRequired": true,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "question": "Upload a screenshot of the terminal showing your program run."
+  }
+}

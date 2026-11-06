@@ -1,7 +1,7 @@
 {
   "name": "codehike-lms",
-  "version": "1.5.0",
-  "description": "Write LMS2 lessons as CodeHike MDX with annotated code, interactive walkthroughs, tabs, and diagrams. Build runnable static or Vite code playgrounds for the in-browser sandbox.",
+  "version": "2.0.0",
+  "description": "Author complete LMS2 lesson content: CodeHike MDX sections, element records for all 11 types, runnable static/Vite playgrounds, and whole backup files that validate clean.",
   "author": {
     "name": "Leon Young",
     "url": "https://github.com/leonyoung1"
@@ -12,6 +12,8 @@
     "lms2",
     "mdx",
     "lessons",
+    "elements",
+    "backups",
     "education",
     "playground",
     "webcontainers",
@@ -21,18 +23,18 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "CodeHike LMS",
-    "shortDescription": "Write CodeHike MDX lessons for LMS2.",
-    "longDescription": "Create student-facing LMS2 lesson elements with annotated code, Scrollycoding walkthroughs, Spotlight comparisons, code tabs, Mermaid diagrams, alerts, accordions, and inline term tooltips on hover. Includes the full annotation reference and MDX examples. Produces raw MDX ready for a lesson element's code field.",
+    "shortDescription": "Author complete LMS2 lesson content: MDX, elements, playgrounds, backups.",
+    "longDescription": "Create student-facing LMS2 content end to end. codehike-content writes lesson sections and inline fields as CodeHike MDX with annotated code, Scrollycoding walkthroughs, Spotlight comparisons, code tabs, Mermaid diagrams, alerts, accordions, and tooltips. lms-elements authors complete records for all 11 element types (markdown, multiple-choice, free-response, code-playground, image, youtube, file-submission, link, feedback, data-table, image-gen). lms-playground builds runnable static or Vite playground file sets for the in-browser WebContainers sandbox. lms-backup assembles whole course/unit/lesson/section backup files with deterministic ids and ranks that validate clean against the platform's import validator.",
     "developerName": "Leon Young",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://github.com/leonyoung1/codehike-lms-skill",
     "defaultPrompt": [
-      "Write an LMS2 lesson on Python loops.",
-      "Create a Scrollycoding walkthrough of fetch.",
-      "Compare JavaScript and Python with code tabs.",
+      "Write an LMS2 lesson section on Python loops with annotated code and a practice question.",
+      "Create a Scrollycoding walkthrough of JavaScript fetch.",
       "Build a static p5.js playground exercise for students learning loops.",
-      "Scaffold a lean Vite + React playground with Tailwind 4 and a tabbed interface."
+      "Create a multiple-choice element record about Python loops, with hint and explanation.",
+      "Make an LMS2 backup file: a new unit with two lessons, each containing a markdown section and a code playground."
     ],
     "brandColor": "#2563EB"
   }
