@@ -131,6 +131,16 @@ export default defineConfig({ plugins: [react(), tailwindcss()] });
 { "scripts": { "dev": "vite", "dev-port": "vite --port $PORT" } }
 ```
 
+## shadcn/ui playgrounds
+
+Use when a lesson needs shadcn/ui components, or students will run the shadcn CLI in the terminal. This is a **vite** project with one hard constraint that changes what you must ship:
+
+- **`shadcn init` cannot run inside the sandbox.** Its theme-config endpoint (`ui.shadcn.com/init?…`) is unreachable from WebContainer egress (no CORS header + connection reset — `docs/reports/webcontainer-egress-block-report.md`). A shadcn playground therefore ships the *post-init state* as files: `components.json`, `src/lib/utils.ts` (`export { cn } from "cn"`), the preset's theme vars in `src/index.css`, and the base deps.
+- **The platform template is canonical.** `src/lms/playground/templates/shadcn.ts` ships exactly this state (Base UI base + Nova preset, CLI 4.23.0) — verified in-VM: install ~3 s, dev server ready <1 s, and live `shadcn add card --yes` generates a working component (~5–11 s). When authoring from scratch, emit the full post-init tree — read `examples/shadcn-vite.md` first; it is that exact file set.
+- **In the student terminal the command is `pnpm dlx shadcn@latest add <component>`** (registry item paths are CORS-open) — generated components land in `src/components/ui/`. This is the intended student exercise: "run `pnpm dlx shadcn@latest add card`, import it, use it." Use `pnpm dlx`, never `npx`: the playground terminal is a jsh PTY with a default command allow-list (`ls cat pwd cd echo head tail grep node npm pnpm` — `src/lms/playground/shell.ts`) that has no `npx`, so an npx instruction is refused verbatim by jsh; `pnpm dlx …` passes (first token `pnpm`) and matches the runtime's package manager (boot-time `pnpm install` leaves a `pnpm-lock.yaml`, which the shadcn CLI detects for any dep installs). Live-verified end-to-end through a real student jsh terminal (2026-11-13): `npx shadcn@latest add card` is refused verbatim (``jsh: the `npx` command is disabled and cannot be used.``), while `pnpm dlx shadcn@latest add card` resolves 223 packages, prints `✔ Created 1 file: src/components/ui/card.tsx`, and the file is present on disk (`ls src/components/ui`) — ~3 s with a warm pnpm store. (The earlier in-VM verification ran the same CLI via direct spawn, where both runners work.)
+- **Never tell students to run `shadcn init`** — it will fail inside the sandbox. If a lesson needs a different base/preset, re-bake on a host machine (`npx shadcn@latest init --yes -b <base> -p <preset>` against the bare Vite+React+Tailwind fixture) and copy over what changed: `components.json`, the theme block in `src/index.css`, `package.json` deps, `src/lib/utils.ts`.
+- **Dependency exception to the lean rule:** keep everything init writes. `shadcn` itself is load-bearing (`@import "shadcn/tailwind.css"` in index.css), `tw-animate-css` and the font package are imported/referenced by the theme block, and `cva`/`cn`/the component library (`@base-ui/react`) back every generated component. Trimming any of them breaks boot or generation.
+
 ## Quality bar
 
 - **Tailwind 4 styling in every playground**, both runtimes (browser tag / vite plugin) — no hand-rolled utility CSS.
@@ -185,10 +195,11 @@ When given current files plus a change request:
 
 ## Examples as fixtures
 
-Two complete worked outputs ship with this skill — one per runtime. Each is a task line plus the exact JSON an agent should emit:
+Three complete worked outputs ship with this skill: one static, one lean vite, and the shadcn post-init set. Each is a task line plus the exact JSON an agent should emit:
 
 - `examples/static-p5.md` — static p5.js bouncing-ball exercise (CDN ESM import, canonical package.json).
 - `examples/vite-react.md` — lean Vite + React tabs demo with Tailwind 4.
+- `examples/shadcn-vite.md` — shadcn/ui playground shipping the post-init state (`components.json` + theme vars + base deps); `shadcn add` works live in its terminal.
 
 Each is verified by a gate (`npm run verify:lms-playground-skill`) that parses its fenced map the way the platform does and asserts the output contracts (bare maps, canonical/lean package.json, Tailwind 4 wiring) — they must stay copy-paste-able as real playground file sets.
 

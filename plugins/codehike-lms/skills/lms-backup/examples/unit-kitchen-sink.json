@@ -267,6 +267,31 @@
       }
     },
     {
+      "collection": "elements",
+      "id": "e00000000000013",
+      "courseId": "c00000000000001",
+      "sectionId": "s00000000000003",
+      "rank": "02",
+      "type": "carousel",
+      "active": true,
+      "access": 200,
+      "data": {
+        "slides": [
+          {
+            "url": "https://example.com/placeholder-1.png",
+            "caption": "Step 1: open the terminal"
+          },
+          {
+            "url": "https://example.com/placeholder-2.png",
+            "caption": "Step 2: run the command"
+          }
+        ],
+        "width": "md",
+        "height": "md",
+        "slidesPerView": 2
+      }
+    },
+    {
       "collection": "instructional_notes",
       "id": "n00000000000001",
       "courseId": "c00000000000001",

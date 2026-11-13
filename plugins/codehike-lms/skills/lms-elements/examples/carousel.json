@@ -1,0 +1,27 @@
+{
+  "collection": "elements",
+  "id": "e00000000000012",
+  "type": "carousel",
+  "rank": "12",
+  "active": true,
+  "access": 200,
+  "courseId": "c00000000000001",
+  "sectionId": "s00000000000001",
+  "data": {
+    "slides": [
+      {
+        "url": "https://example.com/placeholder-1.png",
+        "caption": "Step 1: open the terminal"
+      },
+      {
+        "url": "https://example.com/placeholder-2.png",
+        "caption": "Step 2: run the command"
+      },
+      {
+        "url": "https://example.com/placeholder-3.png"
+      }
+    ],
+    "width": "md",
+    "height": "md"
+  }
+}

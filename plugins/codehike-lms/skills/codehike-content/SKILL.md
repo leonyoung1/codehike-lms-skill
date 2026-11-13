@@ -72,7 +72,7 @@ Pick the simplest thing that works; interactive layouts only when they teach bet
 | A word or phrase worth defining on hover | `<Tooltip tip="…">` |
 | Optional depth ("under the hood") | `<Accordion defaultOpen={false}>` |
 | Structured staff-note block (tips / check-for-understanding / answer) | `<NoteBlock type="…">` |
-| A named activity or Do Now beat inside a section | `<Subsection type="…" title="…"/>` |
+| A named activity, Do Now, or Learn beat inside a section | `<Subsection type="…" title="…"/>` |
 
 ## Designing for the learner
 
@@ -414,7 +414,7 @@ State the answer, then explain why it is correct.
 - The body takes the same full markdown as Alert/Accordion bodies (prose, lists, tables).
   Do not nest a NoteBlock inside another.
 
-## Subsection titles (activity / Do Now headings)
+## Subsection titles (activity / Do Now / Learn headings)
 
 A `<Subsection>` marker is a student-visible structural heading inside markdown element
 content: it marks named activities within a section. It renders a horizontal rule, then the
@@ -429,10 +429,10 @@ table-of-contents entry and an anchor like any other heading.
 The activity's own content follows, using `###` and deeper headings only.
 ````
 
-- Attributes: exactly two. `type` = `activity` (green pill) or `do-now` (yellow pill); an
-  unknown or missing type still renders the rule and the title as a plain `h2`, just without
-  the pill (that is how you spot a typo in the live preview). `title` is plain text, same
-  rule as Alert/Accordion titles.
+- Attributes: exactly two. `type` = `activity` (purple pill), `do-now` (yellow pill), or
+  `learn` (green pill); an unknown or missing type still renders the rule and the title as
+  a plain `h2`, just without the pill (that is how you spot a typo in the live preview).
+  `title` is plain text, same rule as Alert/Accordion titles.
 - One marker per markdown element, as its first line: the staff notes page associates the
   element's instructional note with that one heading. Extra markers in the same element
   still render but stay non-structural (no notes-page row).
@@ -569,8 +569,8 @@ Anti-AI-slop rules, applied to all prose:
 9. `<Tooltip>` needs a non-empty `tip=` and wraps inline content only: never wrap block
    content, never nest tooltips.
 10. One `<Subsection>` marker per markdown element, as its first line; spell the type
-    exactly (`activity`, `do-now`) — a mistyped value degrades silently to a plain h2 with
-    no pill.
+    exactly (`activity`, `do-now`, `learn`) — a mistyped value degrades silently to a plain
+    h2 with no pill.
 11. Every iframe carries `credentialless="true"`, explicit `width`/`height`, and a
     descriptive `title`. Only reference image URLs you were actually given; never invent file
     ids or paths.
@@ -596,7 +596,7 @@ Anti-AI-slop rules, applied to all prose:
 | A `<Tooltip>` without a non-empty `tip=` | The phrase renders as plain text: no underline, no bubble. Nothing errors — check your source |
 | Nested tooltips (a `<Tooltip>` trigger wrapping another `<Tooltip>`) | Unsupported; behavior is undefined. Keep one note per phrase |
 | Block content or a multi-paragraph explanation wrapped in a `<Tooltip>` | A cramped scrolling bubble that breaks out of the sentence; use an Accordion for that depth |
-| A `<Subsection>` with a mistyped `type` (e.g. `activty`) | Rule + plain h2 title, no pill: nothing errors, so check the spelling (`activity`, `do-now`) in your source |
+| A `<Subsection>` with a mistyped `type` (e.g. `activty`) | Rule + plain h2 title, no pill: nothing errors, so check the spelling (`activity`, `do-now`, `learn`) in your source |
 
 ## Recipes / workflows
 
@@ -654,7 +654,7 @@ Read the example that matches what you are about to write before writing it.
 6. No highlighted inline code in any step title, tab label, or `title`/`tip` attribute?
 7. Section markdown starts at `##`; short/inline fields open with no heading; every paragraph
    is one continuous source line?
-8. `<Subsection>`: exactly one per element, first line, type spelled `activity`/`do-now`,
+8. `<Subsection>`: exactly one per element, first line, type spelled `activity`/`do-now`/`learn`,
    content under `###`?
 9. Every iframe has `credentialless="true"`, explicit size, and a `title`; every image URL was
    actually given to you?

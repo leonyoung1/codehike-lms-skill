@@ -1,6 +1,6 @@
 ---
 name: lms-elements
-description: "Author or inspect LMS2 element records — a complete minimal `{type, data}` record in backup-file shape for any of the 11 authorable types (markdown, free-response, multiple-choice, code-playground, image, youtube, file-submission, link, feedback, data-table, image-gen). Use when asked to produce or review a single element record. Not for: raw MDX prose (codehike-content), playground file sets (lms-playground), whole backup files (lms-backup)."
+description: "Author or inspect LMS2 element records — a complete minimal `{type, data}` record in backup-file shape for any of the 12 authorable types (markdown, free-response, multiple-choice, code-playground, image, carousel, youtube, file-submission, link, feedback, data-table, image-gen). Use when asked to produce or review a single element record. Not for: raw MDX prose (codehike-content), playground file sets (lms-playground), whole backup files (lms-backup)."
 ---
 
 # LMS2 Element Records
@@ -26,7 +26,7 @@ A complete minimal element record in backup-file shape:
 {
   "collection": "elements",
   "id": "<15 lowercase alphanumeric chars>",
-  "type": "<one of the 11 types below>",
+  "type": "<one of the 12 types below>",
   "rank": "<zero-padded string, unique within its section>",
   "active": true,
   "access": 200,
@@ -105,6 +105,16 @@ Top-level flags: `isSubmitType: true`, `submissionRequired: true`.
 | `description` | no | CodeHike MDX rendered beside the image. |
 | `width` / `height` | no | Widths / Heights keys, default `"md"`. |
 | `placement` | no | `top` \| `bottom` \| `left` \| `right`, default `right` (description side). Ignored at render time while the description contains a `<Subsection>` marker — layout is forced vertical (`bottom` respected, else top); see codehike-content. |
+
+### carousel
+
+Ordered sequence of images with optional plain-text captions (docs/specs/carousel-element.md).
+
+| field | required? | notes |
+| --- | --- | --- |
+| `slides` | **yes** | Array of `{ url, caption? }`; order = slide order. `url` an admin-file library URL or external https URL; blank rows render nothing (0 effective slides → the element is invisible; exactly 1 → a plain zoomable image with no carousel chrome). `caption` optional **plain text** rendered under its image — not markdown, not CodeHike. |
+| `width` / `height` | no | Widths / Heights keys, default `"md"`. No `placement` or `description` fields exist for this type. |
+| `slidesPerView` | no | Integer **1–4**, omitted = 1 — how many images show at once; layout only (not translatable). When every slide fits in one view the element renders as a plain row of images with no arrows/dots. |
 
 ### youtube
 
@@ -203,11 +213,11 @@ Top-level flag: `isSubmitType: true` only (no `submissionRequired`).
 ## Examples as fixtures
 
 `examples/` holds one bare JSON record per authorable type, named by the type string. Each is
-gate-verified (`verify:lms-elements-skill`): all 11 compose into one synthetic section-kind
+gate-verified (`verify:lms-elements-skill`): all 12 compose into one synthetic section-kind
 backup that validates clean through `validateBackup`, load-bearing shape assertions pass per
 type, and every present CodeHike field compiles + renders through production `mdxOptions`.
 The fixtures share placeholder pointers (`c00000000000001` / `s00000000000001`), ids
-`e00000000000001`–`e00000000000011`, and ranks `"01"`–`"11"`.
+`e00000000000001`–`e00000000000012`, and ranks `"01"`–`"12"`.
 
 ## Pre-output checklist
 
