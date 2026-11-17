@@ -58,7 +58,7 @@ The canonical contract is `docs/specs/content-backup-restore.md` §3.1/§3.2 (de
 | `data-table` | `data.csv` with a header row | — |
 | `image-gen` | `instructions` (MDX inline prose) | codehike-content |
 
-**Instructional notes.** Collection `instructional_notes`; one record is `{ collection, id, courseId, <exactly one of elementId | sectionId | lessonId | unitId>, title, time (seconds), active, note }`. Four tiers — unit / lesson / section / element — with exactly one target set per note and at most one note per record per tier. `note` content is CodeHike MDX written for the **instructor** audience (codehike-content's mechanics apply; it is staff-facing prose, not student-facing callouts).
+**Instructional notes.** Collection `instructional_notes`; one record is `{ collection, id, courseId, <exactly one of elementId | sectionId | lessonId | unitId>, title, time (whole minutes, rendered ≈ 45m — never seconds), active, note }`. Four tiers — unit / lesson / section / element — with exactly one target set per note and at most one note per record per tier. `note` content is CodeHike MDX written for the **instructor** audience (codehike-content's mechanics apply; it is staff-facing prose, not student-facing callouts).
 
 ## Hard rules
 

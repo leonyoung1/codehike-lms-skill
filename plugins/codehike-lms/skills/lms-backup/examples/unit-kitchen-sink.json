@@ -313,7 +313,7 @@
       "courseId": "c-4l6elc",
       "unitId": "u-u97xhp",
       "title": "Kitchen Sink — unit overview",
-      "time": 300,
+      "time": 5,
       "active": true,
       "note": "Walk through each element type once before letting students explore. The code-playground in Basics is the only one that needs to boot — check its preview loads before class."
     },
@@ -323,7 +323,7 @@
       "courseId": "c-4l6elc",
       "lessonId": "l-2gml4e",
       "title": "Second Steps pacing",
-      "time": 180,
+      "time": 3,
       "active": true,
       "note": "Most groups finish Wrap-up early; have them re-explain their variable answer to a partner if they do."
     },
@@ -333,7 +333,7 @@
       "courseId": "c-4l6elc",
       "sectionId": "s-ojh7sl",
       "title": "Practice facilitation",
-      "time": 240,
+      "time": 4,
       "active": true,
       "note": "Circulate while students work. Common stuck point: forgetting that the table's first row is the header, not data."
     },
@@ -343,7 +343,7 @@
       "courseId": "c-4l6elc",
       "elementId": "e-ct7n5n",
       "title": "Counter exercise answer",
-      "time": 120,
+      "time": 2,
       "active": true,
       "note": "Expected solution: `score = score + 1;` then update the display's text. If a student changes the button's label instead of the heading, ask what should change when the score changes."
     }

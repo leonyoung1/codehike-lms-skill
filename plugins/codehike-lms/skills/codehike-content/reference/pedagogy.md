@@ -209,6 +209,9 @@ isn't working — make them distinct, because they tell the instructor different
 
 ### Timing (`time` field)
 
+The value is **whole minutes**, never seconds — the staff badge renders it as `≈ 45m` (or `1h 05m`
+at an hour or more), so a two-minute exercise is `2`, not `120`.
+
 Set it to what a typical student actually needs plus buffer for the transition into and out of the
 beat — at a pace real students manage, not the pace you worked it at. Beats in a section should sum
 to something honest; an overloaded section is where instructors quietly skip the last exercise.
