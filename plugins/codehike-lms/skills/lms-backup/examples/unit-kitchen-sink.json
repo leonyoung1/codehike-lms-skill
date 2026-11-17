@@ -1,39 +1,45 @@
 {
   "format": "lms-backup",
-  "version": 1,
+  "version": 2,
   "kind": "unit",
   "records": [
     {
       "collection": "units",
-      "id": "u00000000000001",
-      "courseId": "c00000000000001",
+      "id": "u-u97xhp",
+      "courseId": "c-4l6elc",
       "rank": "01",
       "name": "Kitchen Sink",
       "active": true,
       "access": 200,
       "translations": {
-        "es": { "name": "Todo en Uno" },
-        "pt": { "name": "Tudo em Um" }
+        "es": {
+          "name": "Todo en Uno"
+        },
+        "pt": {
+          "name": "Tudo em Um"
+        }
       }
     },
     {
       "collection": "lessons",
-      "id": "l00000000000001",
-      "courseId": "c00000000000001",
-      "unitId": "u00000000000001",
+      "id": "l-ws8e8x",
+      "courseId": "c-4l6elc",
+      "unitId": "u-u97xhp",
       "rank": "01",
       "name": "First Steps",
       "active": true,
       "access": 200,
       "translations": {
-        "es": { "name": "Primeros pasos" }
+        "es": {
+          "name": "Primeros pasos"
+        }
       }
     },
     {
       "collection": "lessons",
-      "id": "l00000000000002",
-      "courseId": "c00000000000001",
-      "unitId": "u00000000000001",
+      "id": "l-2gml4e",
+      "courseId": "c-4l6elc",
+      "unitId": "u-u97xhp",
       "rank": "02",
       "name": "Second Steps",
       "active": true,
@@ -41,9 +47,9 @@
     },
     {
       "collection": "sections",
-      "id": "s00000000000001",
-      "courseId": "c00000000000001",
-      "lessonId": "l00000000000001",
+      "id": "s-m5aa73",
+      "courseId": "c-4l6elc",
+      "lessonId": "l-ws8e8x",
       "rank": "01",
       "name": "Basics",
       "objectives": "Explain how variables store values and use them in expressions.",
@@ -52,23 +58,25 @@
     },
     {
       "collection": "sections",
-      "id": "s00000000000002",
-      "courseId": "c00000000000001",
-      "lessonId": "l00000000000001",
+      "id": "s-ojh7sl",
+      "courseId": "c-4l6elc",
+      "lessonId": "l-ws8e8x",
       "rank": "02",
       "name": "Practice",
       "objectives": "",
       "active": true,
       "access": 200,
       "translations": {
-        "es": { "name": "Práctica" }
+        "es": {
+          "name": "Práctica"
+        }
       }
     },
     {
       "collection": "sections",
-      "id": "s00000000000003",
-      "courseId": "c00000000000001",
-      "lessonId": "l00000000000002",
+      "id": "s-9vyedu",
+      "courseId": "c-4l6elc",
+      "lessonId": "l-2gml4e",
       "rank": "01",
       "name": "Wrap-up",
       "objectives": "",
@@ -77,9 +85,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000001",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-3e21hb",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "01",
       "type": "markdown",
       "active": true,
@@ -90,9 +98,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000002",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-w0nr9d",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "02",
       "type": "multiple-choice",
       "active": true,
@@ -102,8 +110,13 @@
       "data": {
         "question": "What does `score` hold after running `score = score + 2`, if it started at 5?",
         "options": [
-          { "text": "7", "explanation": "Adding 2 to the old value of 5 gives 7." },
-          { "text": "2" }
+          {
+            "text": "7",
+            "explanation": "Adding 2 to the old value of 5 gives 7."
+          },
+          {
+            "text": "2"
+          }
         ],
         "correctAnswer": 0
       },
@@ -117,9 +130,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000003",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-v4ldsi",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "03",
       "type": "free-response",
       "active": true,
@@ -133,9 +146,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000004",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-ct7n5n",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "04",
       "type": "code-playground",
       "active": true,
@@ -150,7 +163,10 @@
             "/index.html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\" />\n<title>Counter</title>\n<script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4\"></script>\n</head>\n<body class=\"p-8 bg-slate-100\">\n  <h1 id=\"score\" class=\"text-3xl font-bold\">0</h1>\n  <button id=\"add\" class=\"mt-4 px-4 py-2 rounded bg-blue-600 text-white\">Add one</button>\n  <script type=\"module\" src=\"/main.js\"></script>\n</body>\n</html>\n",
             "/package.json": "{\n  \"scripts\": {\n    \"dev\": \"servor --reload\",\n    \"dev-port\": \"servor . index.html $PORT --reload\",\n    \"start\": \"servor --reload\"\n  },\n  \"dependencies\": {\n    \"servor\": \"^4.0.2\"\n  },\n  \"devDependencies\": {}\n}\n"
           },
-          "visibleFiles": ["/main.js", "/index.html"]
+          "visibleFiles": [
+            "/main.js",
+            "/index.html"
+          ]
         },
         "environment": "static",
         "instruction": "Build a counter: clicking the button should increase the score shown on the page."
@@ -158,9 +174,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000005",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-uysuwn",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "05",
       "type": "image",
       "active": true,
@@ -172,9 +188,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000006",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000001",
+      "id": "e-iroqua",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-m5aa73",
       "rank": "06",
       "type": "youtube",
       "active": true,
@@ -185,9 +201,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000007",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "e-t8wmd7",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "rank": "01",
       "type": "file-submission",
       "active": true,
@@ -200,9 +216,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000008",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "e-c5v6rf",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "rank": "02",
       "type": "link",
       "active": true,
@@ -215,9 +231,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000009",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "e-96omq2",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "rank": "03",
       "type": "feedback",
       "active": true,
@@ -229,9 +245,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000010",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "e-c6dmwi",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "rank": "04",
       "type": "data-table",
       "active": true,
@@ -242,9 +258,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000011",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "e-ubptxw",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "rank": "05",
       "type": "image-gen",
       "active": true,
@@ -255,9 +271,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000012",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000003",
+      "id": "e-7w4ch2",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-9vyedu",
       "rank": "01",
       "type": "markdown",
       "active": true,
@@ -268,9 +284,9 @@
     },
     {
       "collection": "elements",
-      "id": "e00000000000013",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000003",
+      "id": "e-uq9fdo",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-9vyedu",
       "rank": "02",
       "type": "carousel",
       "active": true,
@@ -293,9 +309,9 @@
     },
     {
       "collection": "instructional_notes",
-      "id": "n00000000000001",
-      "courseId": "c00000000000001",
-      "unitId": "u00000000000001",
+      "id": "n-zm1aqj",
+      "courseId": "c-4l6elc",
+      "unitId": "u-u97xhp",
       "title": "Kitchen Sink — unit overview",
       "time": 300,
       "active": true,
@@ -303,9 +319,9 @@
     },
     {
       "collection": "instructional_notes",
-      "id": "n00000000000002",
-      "courseId": "c00000000000001",
-      "lessonId": "l00000000000002",
+      "id": "n-iv982j",
+      "courseId": "c-4l6elc",
+      "lessonId": "l-2gml4e",
       "title": "Second Steps pacing",
       "time": 180,
       "active": true,
@@ -313,9 +329,9 @@
     },
     {
       "collection": "instructional_notes",
-      "id": "n00000000000003",
-      "courseId": "c00000000000001",
-      "sectionId": "s00000000000002",
+      "id": "n-vw2yps",
+      "courseId": "c-4l6elc",
+      "sectionId": "s-ojh7sl",
       "title": "Practice facilitation",
       "time": 240,
       "active": true,
@@ -323,9 +339,9 @@
     },
     {
       "collection": "instructional_notes",
-      "id": "n00000000000004",
-      "courseId": "c00000000000001",
-      "elementId": "e00000000000004",
+      "id": "n-st4eb7",
+      "courseId": "c-4l6elc",
+      "elementId": "e-ct7n5n",
       "title": "Counter exercise answer",
       "time": 120,
       "active": true,

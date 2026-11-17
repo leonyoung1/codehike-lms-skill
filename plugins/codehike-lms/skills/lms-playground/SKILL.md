@@ -56,7 +56,7 @@ A flat-rooted archive named `<slug>.zip` (`bouncing-ball.zip`, not `project/boun
 - Same package.json rules as JSON (explicit `dev-port` always; the importer only auto-injects it for vite/astro zips).
 - Put the primary student-editable file first in the archive — it becomes the active tab.
 
-Planned (not yet wired): honoai's playground generation will adopt this skill as its single source, replacing the hardcoded prompts it uses today. When that lands, the rules above are the contract — don't relax them (extra keys, pretty-printed wrappers) without checking LMS2's `CodeAgent.tsx` and `GenStaticPlaygroundType.tsx`.
+Wired consumer (2026-11-13): honoai's code-agent route (`/api/code_agent/stream`) injects a synced copy of this skill — railway-honoai keeps it at `skills/lms-playground/SKILL.md`, refreshed by its `scripts/sync-skills.ts` and hash-pinned in its `skills-lock.json`. **Changed this file? Run that sync script** (lmsv2's publish script also warns when honoai's copy is stale). Wired 2026-11-13: honoai's static/vite *generation* prompts inject it too (same boot-time load + loud-warning fallback pattern). Don't relax the output rules (extra keys, pretty-printed wrappers) without checking LMS2's `CodeAgent.tsx` and `GenStaticPlaygroundType.tsx`.
 
 ## Choosing a runtime
 

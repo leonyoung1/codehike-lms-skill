@@ -11,6 +11,13 @@ document that renders in the browser as rich markdown with syntax-highlighted, a
 (rendered by the Code Hike library), interactive step layouts, and diagrams. You have no access
 to the app or its source; this skill is your complete reference for what will render.
 
+Wired consumer (2026-11-13): honoai's generate-mdx route (`/api/generate_mdx/stream`)
+injects a synced copy of this skill — railway-honoai keeps the whole directory at
+`skills/codehike-content/`, refreshed by its `scripts/sync-skills.ts` and hash-pinned per
+file in its `skills-lock.json`. The prompt injects SKILL.md + reference/annotations.md
+(pedagogy.md and examples are synced but not injected). **Changed any file of this skill?
+Run that sync script** (lmsv2's publish script also warns when honoai's copy is stale).
+
 ## Where your output goes
 
 Your raw MDX lands **verbatim** in an element's content fields — you emit plain text only:
@@ -346,7 +353,10 @@ Use them for flows, sequences, and structure. They render at column width (768px
 diagrams small and node labels short. Standard Mermaid types work: flowchart,
 sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, pie. Do not annotate them —
 annotations do not apply to mermaid blocks, and label text inside nodes renders exactly as
-written (no markdown, no highlighted inline code).
+written (no markdown, no highlighted inline code). Mermaid's parser is strict about that:
+wrap node labels in double quotes whenever they contain spaces or special characters
+(parens, colons, commas) — `A["Call Start()"]`, not `A[Call Start()]` — an unquoted label
+like that fails to parse and the whole diagram breaks.
 
 ## Callouts and accordions
 
@@ -537,6 +547,8 @@ Anti-AI-slop rules, applied to all prose:
 - Pipe tables, `~~strikethrough~~`, and task lists (`- [ ] item`) all render. Tables are
   constrained to column width; wrap an unusually wide one in `<div className="wide-content">`
   to allow up to 1280px.
+- Horizontal rules: `---` on its own line with blank lines above AND below — a text line
+  directly above would be parsed as a setext heading instead of the rule.
 - External links automatically open in a new tab. To make a token inside a code block link,
   use the `!link` annotation (see reference/annotations.md), not markdown link syntax.
 - Headings get stable anchor ids derived from their text.

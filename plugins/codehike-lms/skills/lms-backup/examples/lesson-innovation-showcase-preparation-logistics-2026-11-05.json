@@ -1,6 +1,6 @@
 {
   "format": "lms-backup",
-  "version": 1,
+  "version": 2,
   "kind": "lesson",
   "exportedAt": "2026-11-05T17:29:23.059Z",
   "source": {
@@ -253,7 +253,7 @@
       "time": 60,
       "active": true,
       "note": "Each day's agenda is its own markdown element. If a day's plan changes, edit that element in place rather than adding a new one — the section order is the week's timeline. The 3:30 reflection links into the Daily Reflections unit.",
-      "id": "n00000000000099"
+      "id": "n-rbs0bg"
     }
   ]
 }

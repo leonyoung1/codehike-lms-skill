@@ -2,8 +2,8 @@
 
 - Author: Leon Young.
 - Skill source: private `leonyoung1/lmsv2` repository, `.agents/skills/codehike-content/`.
-- Bundled from source revision `092c724b33b6432b41e5235912f071edb8d1efd8` (branch main).
-- Plugin version: `2.0.2`.
+- Bundled from source revision `1e36c31ea8cda51e2258cdee44c399f105521bf5` (branch main).
+- Plugin version: `2.1.0`.
 
 The skill, reference, and examples are copied verbatim from that revision. Packaging adds:
 
